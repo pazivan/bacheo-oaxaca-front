@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#951A3E",
+                        "primary-dark": "#751431",
+                        "background-light": "#f8f6f6",
+                        "oaxaca-gold": "#bc955c",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "sans": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>.pattern-overlay {
+    background-color: #f8f6f6;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAmKoA3_L2o_AmOa0UrgUMMD_NwvTGe9O4GnW3zlyqxWlAnwFVWfJHo8e0bCPy1tRQ_lSNIdcABwgRZITvRO_fd6-y-q9sCWyIccpJukJSuUvAFrRDo-wv051tAYEP8WjX-YAil33k-nwGJaDVm2GN12KY6VAztN2jWRdVAVH5iX01ZPeCvNHaQCOWR2ykPWsuwKxxRPGOyJEl2ZthR_G_n-FF8zQX3SM-UN9jESikmV5I4C2faCaH9Ut2_t6EExCbR1GmPPQ8jJHJ2);
+    /* Note: In a real scenario, a custom SVG of Zapotec grecas would be used here as a mask or background */
+    }
+.grecas-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.03;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h30v30H0V0zm30 30h30v30H30V30zM0 30h10v10H0V30zm10 10h10v10H10V40zm10-10h10v10H20V30zm10-10h10v10H30V20zm10 10h10v10H40V30zm10-10h10v10H50V20z' fill='%23951A3E' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")
+    }</style>
+</head>
+<body class="bg-background-light font-sans antialiased text-slate-900">
+<div class="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
+<!-- Subtle Pattern Background -->
+<div class="grecas-bg"></div>
+<div class="layout-content-container flex flex-col max-w-[480px] w-full bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-slate-100 relative z-10">
+<!-- Logo Header -->
+<div class="flex flex-col items-center mb-10">
+<img alt="Gobierno de Oaxaca" class="h-20 w-auto mb-6 object-contain" data-alt="The official institutional shield of the State of Oaxaca, Mexico, rendered in a clean, high-resolution vector format against a minimalist white background. The emblem features rich historical symbolism including traditional indigenous motifs and colonial heraldry. The color palette is dominated by professional deep maroon and elegant gold accents, reflecting a formal governmental aesthetic. The lighting is perfectly flat and corporate, ensuring every detail of the state crest is legible and dignified." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy3OK7qU2rfdP3Wu7jikBVY-Ji-XzUnZomgZH0bX631ckg5o3M_fdactK2Xw_YCKDKdGL4PXHAMdwmr81xvVs47klQTGETUPXvOp38RDGP993xBNVUASBZthdiLfXf1KRgCfFe72cCPrr6CIIMqx2EkdAjiSQ1pr_oC3lUbgB9H2DRy-0ZPchd7uXNkInRRLV02v4Is6h1rADZR9oe0McJshHraGdt-UsHO8RP72dho1oSu26ISyE8XiRXa-JdvVd5gkTFtkUBwW9I"/>
+<div class="h-1 w-20 bg-primary rounded-full mb-6"></div>
+<h1 class="text-2xl font-bold text-slate-800 text-center tracking-tight">Iniciar Sesión</h1>
+<p class="text-slate-500 text-sm mt-2 text-center">Acceso restringido a personal autorizado</p>
+</div>
+<!-- Login Form -->
+<form class="space-y-5">
+<div class="flex flex-col gap-1.5">
+<label class="text-slate-700 text-sm font-semibold ml-1">Correo electrónico institucional</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</div>
+<input class="flex w-full rounded-xl border-slate-200 bg-slate-50 pl-11 pr-4 py-3.5 text-slate-900 focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all placeholder:text-slate-400" placeholder="usuario@oaxaca.gob.mx" required="" type="email"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-slate-700 text-sm font-semibold ml-1">Contraseña</label>
+<div class="relative flex items-center rounded-xl overflow-hidden border border-slate-200 bg-slate-50 group focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/20 transition-all">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</div>
+<input class="flex w-full bg-transparent border-none pl-11 pr-12 py-3.5 text-slate-900 focus:ring-0 placeholder:text-slate-400" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-0 top-0 bottom-0 px-4 text-slate-400 hover:text-primary transition-colors" data-icon="visibility" data-weight="regular" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between py-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded border-slate-300 text-primary focus:ring-primary/20 cursor-pointer" type="checkbox"/>
+<span class="text-sm text-slate-600 group-hover:text-slate-800 transition-colors">Recordarme</span>
+</label>
+<a class="text-sm font-medium text-primary hover:text-primary-dark transition-colors" href="#">¿Olvidó su contraseña?</a>
+</div>
+<button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2" type="submit">
+<span>Entrar al Sistema</span>
+<span class="material-symbols-outlined text-[20px]">login</span>
+</button>
+</form>
+<!-- Footer Links -->
+<div class="mt-10 pt-8 border-t border-slate-100 text-center">
+<p class="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-4">Módulos de Apoyo</p>
+<div class="flex justify-center gap-6">
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="p-3 rounded-full bg-slate-50 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">help</span>
+</div>
+<span class="text-[10px] font-bold text-slate-500 group-hover:text-slate-700">SOPORTE</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="p-3 rounded-full bg-slate-50 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">menu_book</span>
+</div>
+<span class="text-[10px] font-bold text-slate-500 group-hover:text-slate-700">MANUAL</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="p-3 rounded-full bg-slate-50 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">verified_user</span>
+</div>
+<span class="text-[10px] font-bold text-slate-500 group-hover:text-slate-700">AVISO</span>
+</a>
+</div>
+</div>
+</div>
+<!-- System Decorative Elements -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 text-slate-400 text-[10px] font-medium tracking-tight uppercase whitespace-nowrap z-0">
+            © 2024 Gobierno del Estado de Oaxaca | Dirección de Tecnologías de la Información
+        </div>
+</div>
+</body></html>
