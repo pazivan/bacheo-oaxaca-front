@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Sistema de Bacheo - Gobierno de Oaxaca</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#951A3E",
+                        "primary-dark": "#751431",
+                        background: "#f8f6f6"
+                    },
+                    fontFamily: {
+                        sans: ["Public Sans", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-slate-900 font-sans flex h-screen overflow-hidden">
+    
+    <aside class="w-64 bg-white border-r border-slate-200 flex flex-col">
+        <div class="p-6 border-b border-slate-200 flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary text-3xl">drone</span>
+            <span class="font-bold text-lg">Smart City Oax</span>
+        </div>
+        <nav class="flex-1 p-4 space-y-2">
+            <a href="#" class="flex items-center gap-3 bg-primary/10 text-primary px-4 py-3 rounded-lg font-medium">
+                <span class="material-symbols-outlined">map</span>
+                Mapa de Drones
+            </a>
+            <a href="#" class="flex items-center gap-3 text-slate-600 hover:bg-slate-50 px-4 py-3 rounded-lg font-medium transition-colors">
+                <span class="material-symbols-outlined">format_list_bulleted</span>
+                Prioridades (Top 40)
+            </a>
+        </nav>
+        <div class="p-4 border-t border-slate-200">
+            <a href="index.html" class="flex items-center gap-3 text-slate-600 hover:text-primary transition-colors px-4 py-2">
+                <span class="material-symbols-outlined">logout</span>
+                Cerrar Sesión
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto p-8">
+        <header class="mb-8 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-800">Detección de Baches</h1>
+                <p class="text-slate-500">Zona Urbana Metropolitana</p>
+            </div>
+            <button class="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg font-medium flex items-center gap-2 shadow-lg shadow-primary/20 transition-all">
+                <span class="material-symbols-outlined">flight_takeoff</span>
+                Nuevo Escaneo
+            </button>
+        </header>
+
+        <div class="grid grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 border-l-4 border-l-primary">
+                <p class="text-slate-500 text-sm font-medium mb-1">Baches Detectados Hoy</p>
+                <p class="text-3xl font-bold text-slate-800">42</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 border-l-4 border-l-orange-500">
+                <p class="text-slate-500 text-sm font-medium mb-1">Calles en Riesgo Crítico</p>
+                <p class="text-3xl font-bold text-slate-800">12</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 border-l-4 border-l-green-500">
+                <p class="text-slate-500 text-sm font-medium mb-1">Costo Estimado</p>
+                <p class="text-3xl font-bold text-slate-800">$142,000 MXN</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 h-96 flex items-center justify-center text-slate-400 flex-col gap-4">
+            <span class="material-symbols-outlined text-5xl">satellite_alt</span>
+            <p><div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col h-[500px]">
+            <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h2 class="font-bold text-slate-800 text-lg">Top 40: Calles Prioritarias</h2>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+                    <input type="text" placeholder="Buscar calle..." class="pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 w-64">
+                </div>
+            </div>
+            
+            <div class="overflow-y-auto flex-1">
+                <table class="w-full text-left text-sm text-slate-600">
+                    <thead class="bg-slate-50 sticky top-0 border-b border-slate-100 z-10">
+                        <tr>
+                            <th class="py-3 px-6 font-semibold text-slate-700">Prioridad</th>
+                            <th class="py-3 px-6 font-semibold text-slate-700">Calle / Zona</th>
+                            <th class="py-3 px-6 font-semibold text-slate-700">Baches Detectados</th>
+                            <th class="py-3 px-6 font-semibold text-slate-700">Costo Estimado</th>
+                            <th class="py-3 px-6 font-semibold text-slate-700 text-center">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-baches" class="divide-y divide-slate-100">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script>
+            // Estos son datos de prueba. Después los traerán de su API en Java.
+            const datosBaches = [
+                { id: 1, calle: "Av. Universidad, Zona Sur", cantidad: 31, costo: 110000, nivel: "Crítico", color: "text-red-600 bg-red-50 border-red-200" },
+                { id: 2, calle: "Independencia, Centro", cantidad: 24, costo: 85000, nivel: "Crítico", color: "text-red-600 bg-red-50 border-red-200" },
+                { id: 3, calle: "Calz. Héroes de Chapultepec", cantidad: 18, costo: 62000, nivel: "Alto", color: "text-orange-600 bg-orange-50 border-orange-200" },
+                { id: 4, calle: "Crespo esq. Morelos", cantidad: 12, costo: 45000, nivel: "Medio", color: "text-yellow-600 bg-yellow-50 border-yellow-200" },
+                { id: 5, calle: "Calz. Porfirio Díaz", cantidad: 7, costo: 22500, nivel: "Bajo", color: "text-green-600 bg-green-50 border-green-200" },
+            ];
+
+            const tbody = document.getElementById('tabla-baches');
+
+            datosBaches.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition-colors";
+                
+                // Formatear el número a moneda mexicana
+                const costoFormateado = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(item.costo);
+
+                tr.innerHTML = `
+                    <td class="py-3 px-6">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold border ${item.color}">
+                            ${index + 1} - ${item.nivel}
+                        </span>
+                    </td>
+                    <td class="py-3 px-6 font-medium text-slate-800">${item.calle}</td>
+                    <td class="py-3 px-6">
+                        <div class="flex items-center gap-2">
+                            <div class="w-16 bg-slate-200 rounded-full h-1.5"><div class="bg-primary h-1.5 rounded-full" style="width: ${Math.min((item.cantidad/40)*100, 100)}%"></div></div>
+                            <span>${item.cantidad}</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6 font-medium">${costoFormateado}</td>
+                    <td class="py-3 px-6 text-center">
+                        <button class="text-primary hover:text-primary-dark p-2 hover:bg-primary/10 rounded-lg transition-colors" title="Ver en mapa">
+                            <span class="material-symbols-outlined text-[20px]">location_on</span>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        </script>Aquí integraremos el mapa interactivo y la lista de las 40 calles.</p>
+        </div>
+    </main>
+
+</body>
+</html>
