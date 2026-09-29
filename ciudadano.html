@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Portal Ciudadano - Servicios Urbanos de Oaxaca</title>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#951A3E",
+                        "primary-dark": "#751431",
+                        "background-light": "#f8f6f6",
+                        "oaxaca-gold": "#bc955c",
+                        "success": "#2e7d32",
+                        "warning": "#ed6c02",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "sans": ["Public Sans", "sans-serif"]
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out forwards',
+                        'slide-up': 'slideUp 0.4s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .grecas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h30v30H0V0zm30 30h30v30H30V30zM0 30h10v10H0V30zm10 10h10v10H10V40zm10-10h10v10H20V30zm10-10h10v10H30V20zm10 10h10v10H40V30zm10-10h10v10H50V20z' fill='%23951A3E' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            z-index: -1;
+        }
+
+        .tab-active {
+            border-bottom: 3px solid #951A3E;
+            color: #951A3E;
+            font-weight: 600;
+        }
+
+        .tab-inactive {
+            color: #64748b;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-inactive:hover {
+            color: #951A3E;
+            background-color: #f8fafc;
+        }
+
+        /* Hide scrollbar for clean tabs */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light font-sans antialiased text-slate-900 min-h-screen flex flex-col relative">
+    <div class="grecas-bg"></div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-[60] flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-4">
+                    <img alt="Gobierno de Oaxaca" class="h-10 md:h-12 w-auto object-contain"
+                        src="./src/assets/LOGOTIPO-OAXACA.jpeg" onerror="this.src='https://via.placeholder.com/150x50?text=Logo+Oaxaca'" />
+                    <div class="h-8 w-px bg-slate-200 hidden md:block"></div>
+                    <div class="hidden md:block">
+                        <h1 class="text-lg md:text-xl font-bold text-slate-800 leading-tight">Servicios Urbanos</h1>
+                        <p class="text-xs text-slate-500">Atención Ciudadana y Transparencia</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 md:gap-3">
+                    <button class="text-xs md:text-sm font-medium text-slate-600 hover:text-primary hidden sm:block">Consultar mi folio</button>
+                    <a href="index.html" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-semibold transition-colors flex items-center gap-1.5 md:gap-2">
+                        <span class="material-symbols-outlined text-[16px] md:text-[18px]">admin_panel_settings</span>
+                        <span class="hidden sm:inline">Acceso Servidores</span>
+                        <span class="sm:hidden">Acceder</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex flex-col gap-6 md:gap-8">
+
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-primary to-primary-dark rounded-2xl p-6 md:p-12 text-white shadow-xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+            <div class="relative z-10 w-full lg:max-w-2xl text-center lg:text-left">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white text-[10px] md:text-xs font-bold uppercase tracking-wider mb-4 border border-white/30 backdrop-blur-sm">
+                    <span class="material-symbols-outlined text-[14px]">smart_toy</span> IA de Clasificación Activa
+                </span>
+                <h2 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">Oaxaca Transparente y Eficiente</h2>
+                <p class="text-sm md:text-lg text-white/90 mb-6 lg:mb-8 leading-relaxed">
+                    Reporta incidencias urbanas desde tu celular. Nuestra plataforma automatizada clasifica, asigna y da seguimiento a tu reporte en tiempo real. Juntos mejoramos nuestra ciudad.
+                </p>
+                <button onclick="switchTab('reportar')" class="bg-oaxaca-gold hover:bg-yellow-600 text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-xl shadow-lg transition-transform transform active:scale-95 flex items-center justify-center lg:justify-start gap-2 text-sm md:text-lg mx-auto lg:mx-0 w-full sm:w-auto">
+                    <span class="material-symbols-outlined">add_circle</span>
+                    Crear Nuevo Reporte
+                </button>
+            </div>
+            <div class="relative z-10 hidden lg:block w-full max-w-sm">
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl shadow-2xl ml-auto">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center border border-green-400/50">
+                            <span class="material-symbols-outlined text-green-400">check_circle</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-white/70">Atendidos este mes</p>
+                            <p class="text-2xl font-bold text-white" id="hero-concluidas-count">1,429</p>
+                        </div>
+                    </div>
+                    <div class="h-px w-full bg-white/20 my-4"></div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-400/50">
+                            <span class="material-symbols-outlined text-blue-400">timer</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-white/70">Tiempo prom. respuesta</p>
+                            <p class="text-xl font-bold text-white">48 horas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <div class="border-b border-slate-200 mt-2 md:mt-4 sticky top-20 z-40 bg-background-light pt-2">
+            <nav class="flex gap-4 md:gap-8 overflow-x-auto no-scrollbar pb-px" aria-label="Tabs">
+                <button onclick="switchTab('reportar')" id="tab-reportar" class="tab-active py-3 px-2 flex items-center gap-2 whitespace-nowrap transition-colors text-sm md:text-base">
+                    <span class="material-symbols-outlined text-[20px]">campaign</span> <span class="font-medium">Reportar Incidencia</span>
+                </button>
+                <button onclick="switchTab('historial')" id="tab-historial" class="tab-inactive py-3 px-2 flex items-center gap-2 whitespace-nowrap transition-colors text-sm md:text-base">
+                    <span class="material-symbols-outlined text-[20px]">history</span> <span class="font-medium">Servicios Atendidos</span>
+                </button>
+                <button onclick="switchTab('obras')" id="tab-obras" class="tab-inactive py-3 px-2 flex items-center gap-2 whitespace-nowrap transition-colors text-sm md:text-base">
+                    <span class="material-symbols-outlined text-[20px]">construction</span> <span class="font-medium">Obras Públicas</span>
+                </button>
+                <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-inactive py-3 px-2 flex items-center gap-2 whitespace-nowrap transition-colors text-sm md:text-base">
+                    <span class="material-symbols-outlined text-[20px]">bar_chart</span> <span class="font-medium">Tablero</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- TAB CONTENT: REPORTAR -->
+        <section id="content-reportar" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-8 animate-fade-in">
+            <div class="max-w-3xl mx-auto">
+                <div class="mb-6 md:mb-8 text-center md:text-left">
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-800">Generar Solicitud de Servicio</h3>
+                    <p class="text-sm md:text-base text-slate-500 mt-2">Nuestra Inteligencia Artificial clasificará automáticamente su reporte y lo enviará al área correspondiente (SINFRA, Municipio, SAPAO, etc).</p>
+                </div>
+
+                <form id="form-reporte" class="space-y-6">
+                    <!-- Categoría -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">¿Qué tipo de problema desea reportar?</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="categoria" value="Bacheo" class="peer sr-only" checked />
+                                <div class="rounded-xl border-2 border-slate-200 p-3 md:p-4 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all">
+                                    <span class="material-symbols-outlined text-2xl md:text-3xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1 md:mb-2">pothole</span>
+                                    <p class="text-xs md:text-sm font-medium text-slate-700">Bacheo</p>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="categoria" value="Alumbrado" class="peer sr-only" />
+                                <div class="rounded-xl border-2 border-slate-200 p-3 md:p-4 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all">
+                                    <span class="material-symbols-outlined text-2xl md:text-3xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1 md:mb-2">lightbulb</span>
+                                    <p class="text-xs md:text-sm font-medium text-slate-700">Luminaria</p>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="categoria" value="Agua Potable" class="peer sr-only" />
+                                <div class="rounded-xl border-2 border-slate-200 p-3 md:p-4 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all">
+                                    <span class="material-symbols-outlined text-2xl md:text-3xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1 md:mb-2">water_drop</span>
+                                    <p class="text-xs md:text-sm font-medium text-slate-700">Fuga de Agua</p>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="categoria" value="Otro" class="peer sr-only" />
+                                <div class="rounded-xl border-2 border-slate-200 p-3 md:p-4 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all">
+                                    <span class="material-symbols-outlined text-2xl md:text-3xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1 md:mb-2">more_horiz</span>
+                                    <p class="text-xs md:text-sm font-medium text-slate-700">Otro</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Ubicación -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Ubicación exacta</label>
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <div class="relative flex-grow">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                    <span class="material-symbols-outlined text-[20px]">location_on</span>
+                                </div>
+                                <input type="text" id="ubicacion" class="flex w-full rounded-xl border-slate-200 bg-slate-50 pl-10 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary/20 placeholder:text-slate-400" placeholder="Ej. Av. Universidad esquina con Símbolos Patrios" required />
+                            </div>
+                            <button type="button" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-3 sm:py-0 rounded-xl font-medium transition-colors flex items-center justify-center gap-2" title="Usar mi ubicación actual">
+                                <span class="material-symbols-outlined text-[20px]">my_location</span>
+                                <span class="sm:hidden text-sm">Usar mi GPS</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Descripción del problema</label>
+                        <textarea id="descripcion" rows="3" class="flex w-full rounded-xl border-slate-200 bg-slate-50 p-4 text-sm focus:border-primary focus:ring-1 focus:ring-primary/20 placeholder:text-slate-400" placeholder="Brinde más detalles (profundidad, si bloquea el paso, etc.) para que la IA clasifique mejor el riesgo..." required></textarea>
+                    </div>
+
+                    <!-- Evidencia Fotográfica -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Evidencia Fotográfica</label>
+                        <div class="border-2 border-dashed border-slate-300 rounded-xl p-6 md:p-8 text-center hover:bg-slate-50 transition-colors cursor-pointer flex flex-col items-center justify-center gap-2 group relative overflow-hidden">
+                            <input type="file" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" accept="image/*" />
+                            <span class="material-symbols-outlined text-4xl text-slate-400 group-hover:text-primary transition-colors">add_a_photo</span>
+                            <p class="text-slate-600 font-medium text-sm md:text-base">Toca para tomar una foto o subir archivo</p>
+                            <p class="text-[10px] md:text-xs text-slate-400">La IA analizará la imagen para validar la veracidad y dimensión.</p>
+                        </div>
+                    </div>
+
+                    <!-- Botón Enviar -->
+                    <div class="pt-4">
+                        <button type="submit" id="btn-submit" class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3.5 md:py-4 rounded-xl shadow-lg transition-all transform active:scale-[0.99] flex items-center justify-center gap-2 relative overflow-hidden">
+                            <span id="btn-text">Enviar Solicitud al Sistema</span>
+                            <span id="btn-icon" class="material-symbols-outlined">send</span>
+                            <!-- Spinner (hidden by default) -->
+                            <svg id="btn-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden absolute" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </button>
+                        <p class="text-center text-[10px] md:text-xs text-slate-500 mt-4 flex items-center justify-center gap-1">
+                            <span class="material-symbols-outlined text-[14px]">security</span> Sus datos personales están protegidos por la Ley de Privacidad
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- TAB CONTENT: HISTORIAL (Oculto por defecto) -->
+        <section id="content-historial" class="hidden space-y-6 animate-fade-in">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-6">
+                <div>
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-800">Servicios Atendidos</h3>
+                    <p class="text-sm text-slate-500 mt-1">Historial de incidencias reportadas y resueltas.</p>
+                </div>
+                <div class="relative w-full md:w-64">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
+                    <input type="text" class="w-full rounded-full border-slate-200 bg-white pl-10 pr-4 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary/20" placeholder="Buscar por colonia o folio..." />
+                </div>
+            </div>
+
+            <!-- Grid de servicios concluidos -->
+            <div id="historial-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                <!-- Se llena dinámicamente con JS -->
+            </div>
+        </section>
+
+        <!-- TAB CONTENT: OBRAS PUBLICAS (Oculto por defecto) -->
+        <section id="content-obras" class="hidden space-y-6 animate-fade-in">
+             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-8 flex flex-col lg:flex-row items-center justify-between gap-4 md:gap-6">
+                <div class="text-center lg:text-left">
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-2">Obras Públicas en Ejecución</h3>
+                    <p class="text-sm text-slate-500 max-w-2xl mx-auto lg:mx-0">Manténgase informado sobre los proyectos de infraestructura que el Gobierno de Oaxaca realiza para mejorar la conectividad.</p>
+                </div>
+                <a href="https://transparencia.oaxaca.gob.mx" target="_blank" class="w-full lg:w-auto bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm md:text-base font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 whitespace-nowrap">
+                    <span class="material-symbols-outlined text-[20px]">account_balance</span> Info. Presupuestaria
+                </a>
+             </div>
+
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Obra 1 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-6 flex flex-col md:flex-row gap-4 md:gap-6 group hover:shadow-md transition-shadow">
+                    <div class="w-full md:w-48 h-48 md:h-full min-h-[160px] bg-slate-200 rounded-xl flex-shrink-0 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1541888082405-eb101af71a06?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <div class="absolute top-2 right-2 md:hidden">
+                            <span class="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-1 rounded shadow-sm">EN EJECUCIÓN</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="hidden md:flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-base md:text-lg text-slate-800 line-clamp-1">Rehabilitación Símbolos Patrios</h4>
+                                <span class="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-1 rounded whitespace-nowrap ml-2">EN EJECUCIÓN</span>
+                            </div>
+                            <h4 class="md:hidden font-bold text-base text-slate-800 mb-1">Rehabilitación Símbolos Patrios</h4>
+                            <p class="text-xs md:text-sm text-slate-600 mb-4 line-clamp-2">Pavimentación con concreto hidráulico y modernización de camellones e iluminación ecológica.</p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <p class="text-[10px] uppercase tracking-wide text-slate-400 font-bold">Responsable</p>
+                                    <p class="text-xs md:text-sm font-medium text-slate-700">SINFRA</p>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] uppercase tracking-wide text-slate-400 font-bold">Cierre Estimado</p>
+                                    <p class="text-xs md:text-sm font-medium text-slate-700">Nov 2026</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Barra de progreso -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 font-medium">
+                                <span class="text-slate-500">Avance físico</span>
+                                <span class="text-primary font-bold">65%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-1.5 md:h-2 overflow-hidden">
+                                <div class="bg-primary h-full rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Obra 2 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-6 flex flex-col md:flex-row gap-4 md:gap-6 group hover:shadow-md transition-shadow">
+                    <div class="w-full md:w-48 h-48 md:h-full min-h-[160px] bg-slate-200 rounded-xl flex-shrink-0 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <div class="absolute top-2 right-2 md:hidden">
+                            <span class="bg-green-100 text-green-800 text-[10px] font-bold px-2 py-1 rounded shadow-sm">TERMINADA</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="hidden md:flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-base md:text-lg text-slate-800 line-clamp-1">Parque Lineal Atoyac</h4>
+                                <span class="bg-green-100 text-green-800 text-[10px] font-bold px-2 py-1 rounded whitespace-nowrap ml-2">TERMINADA</span>
+                            </div>
+                            <h4 class="md:hidden font-bold text-base text-slate-800 mb-1">Parque Lineal Atoyac</h4>
+                            <p class="text-xs md:text-sm text-slate-600 mb-4 line-clamp-2">Construcción de áreas verdes, ciclovía y recuperación de espacios públicos en riberas.</p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <p class="text-[10px] uppercase tracking-wide text-slate-400 font-bold">Responsable</p>
+                                    <p class="text-xs md:text-sm font-medium text-slate-700">Sec. Bienestar</p>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] uppercase tracking-wide text-slate-400 font-bold">Cierre Real</p>
+                                    <p class="text-xs md:text-sm font-medium text-slate-700">Ago 2026</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Barra de progreso -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 font-medium">
+                                <span class="text-slate-500">Avance físico</span>
+                                <span class="text-green-600 font-bold">100%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-1.5 md:h-2 overflow-hidden">
+                                <div class="bg-green-500 h-full rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <!-- TAB CONTENT: DASHBOARD (Oculto por defecto) -->
+        <section id="content-dashboard" class="hidden space-y-6 animate-fade-in">
+            <h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-2 md:mb-4">Indicadores de Desempeño Urbano</h3>
+            
+            <!-- KPIs -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+                <div class="bg-white p-4 md:p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
+                    <p class="text-xs md:text-sm text-slate-500 font-medium mb-1">Solicitudes Recibidas</p>
+                    <p class="text-3xl md:text-4xl font-bold text-slate-800" id="kpi-recibidas">2,845</p>
+                </div>
+                <div class="bg-white p-4 md:p-6 rounded-2xl border border-primary/20 shadow-sm text-center relative overflow-hidden">
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-primary"></div>
+                    <p class="text-xs md:text-sm text-primary font-medium mb-1">En Reparación</p>
+                    <p class="text-3xl md:text-4xl font-bold text-primary">312</p>
+                </div>
+                <div class="bg-white p-4 md:p-6 rounded-2xl border border-green-200 shadow-sm text-center relative overflow-hidden">
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-green-500"></div>
+                    <p class="text-xs md:text-sm text-green-600 font-medium mb-1">Concluidas</p>
+                    <p class="text-3xl md:text-4xl font-bold text-green-600" id="kpi-concluidas">2,510</p>
+                </div>
+                <div class="bg-white p-4 md:p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
+                    <p class="text-xs md:text-sm text-slate-500 font-medium mb-1">Tiempo Promedio</p>
+                    <p class="text-3xl md:text-4xl font-bold text-slate-800">48<span class="text-sm md:text-lg text-slate-500 font-normal">hrs</span></p>
+                </div>
+            </div>
+
+            <!-- Charts placeholders -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mt-2 md:mt-6">
+                <div class="bg-white p-5 md:p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h4 class="font-bold text-slate-700 mb-6 text-sm md:text-base">Servicios Atendidos por Categoría</h4>
+                    <div class="space-y-5" id="category-bars">
+                        <!-- Llenado dinámicamente o semi-dinámico -->
+                        <div>
+                            <div class="flex justify-between text-xs md:text-sm mb-1.5"><span class="text-slate-600 font-medium">Baches</span><span class="font-bold text-slate-800">1,130 (45%)</span></div>
+                            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden"><div class="bg-primary h-full rounded-full transition-all duration-1000" style="width: 45%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs md:text-sm mb-1.5"><span class="text-slate-600 font-medium">Luminarias</span><span class="font-bold text-slate-800">753 (30%)</span></div>
+                            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden"><div class="bg-yellow-500 h-full rounded-full transition-all duration-1000" style="width: 30%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs md:text-sm mb-1.5"><span class="text-slate-600 font-medium">Fugas de Agua</span><span class="font-bold text-slate-800">376 (15%)</span></div>
+                            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden"><div class="bg-blue-500 h-full rounded-full transition-all duration-1000" style="width: 15%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs md:text-sm mb-1.5"><span class="text-slate-600 font-medium">Otros</span><span class="font-bold text-slate-800">251 (10%)</span></div>
+                            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden"><div class="bg-slate-400 h-full rounded-full transition-all duration-1000" style="width: 10%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 md:p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center">
+                    <h4 class="font-bold text-slate-700 mb-6 text-sm md:text-base">Resumen de Obras Públicas</h4>
+                    <div class="grid grid-cols-2 gap-3 md:gap-4 text-center">
+                        <div class="p-4 md:p-6 bg-slate-50 rounded-xl border border-slate-100">
+                            <span class="block text-2xl md:text-4xl font-black text-slate-700 mb-1">14</span>
+                            <span class="text-[10px] md:text-xs text-slate-500 uppercase font-bold tracking-wider">En Planeación</span>
+                        </div>
+                        <div class="p-4 md:p-6 bg-yellow-50 rounded-xl border border-yellow-100">
+                            <span class="block text-2xl md:text-4xl font-black text-yellow-700 mb-1">8</span>
+                            <span class="text-[10px] md:text-xs text-yellow-600 uppercase font-bold tracking-wider">En Ejecución</span>
+                        </div>
+                        <div class="p-4 md:p-6 bg-green-50 rounded-xl border border-green-100">
+                            <span class="block text-2xl md:text-4xl font-black text-green-700 mb-1">32</span>
+                            <span class="text-[10px] md:text-xs text-green-600 uppercase font-bold tracking-wider">Terminadas</span>
+                        </div>
+                        <div class="p-4 md:p-6 bg-red-50 rounded-xl border border-red-100">
+                            <span class="block text-2xl md:text-4xl font-black text-red-700 mb-1">2</span>
+                            <span class="text-[10px] md:text-xs text-red-600 uppercase font-bold tracking-wider">Suspendidas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 py-6 md:py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div>
+                <p class="text-sm font-semibold text-slate-700">Gobierno del Estado de Oaxaca</p>
+                <p class="text-xs text-slate-500 mt-1">Dirección de Tecnologías de la Información © 2026</p>
+            </div>
+            <div class="flex gap-4">
+                <a href="#" class="text-xs text-slate-500 hover:text-primary transition-colors">Términos y Condiciones</a>
+                <a href="#" class="text-xs text-slate-500 hover:text-primary transition-colors">Aviso de Privacidad</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIC SCRIPT (Simulated Backend) -->
+    <script>
+        // MOCK DATA: Base de datos simulada
+        let reportes = [
+            {
+                id: "OAX-2026-001",
+                categoria: "Bacheo",
+                ubicacion: "Av. Universidad esq. Símbolos Patrios",
+                descripcion: "Se cubrió bache de 1m de diámetro reportado por la ciudadanía.",
+                estado: "Concluido",
+                fecha: "28/09/2026",
+                dependencia: "SINFRA",
+                img: "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&q=80&w=400",
+                icon: "pothole"
+            },
+            {
+                id: "OAX-2026-002",
+                categoria: "Alumbrado",
+                ubicacion: "Calle 5 de Mayo, Centro",
+                descripcion: "Sustitución de lámpara fundida por luminaria LED de alta eficiencia.",
+                estado: "Concluido",
+                fecha: "27/09/2026",
+                dependencia: "Municipio",
+                img: "https://images.unsplash.com/photo-1542385150-515a0ee33878?auto=format&fit=crop&q=80&w=400",
+                icon: "lightbulb"
+            },
+            {
+                id: "OAX-2026-003",
+                categoria: "Agua Potable",
+                ubicacion: "Col. Reforma",
+                descripcion: "Reparación de tubo principal de 4 pulgadas. Se restableció el servicio.",
+                estado: "Concluido",
+                fecha: "25/09/2026",
+                dependencia: "SAPAO",
+                img: "https://images.unsplash.com/photo-1600705292591-9c60e334df58?auto=format&fit=crop&q=80&w=400",
+                icon: "water_drop"
+            }
+        ];
+
+        // Estadísticas simuladas
+        let estadisticas = {
+            recibidas: 2845,
+            concluidas: 2510
+        };
+
+        // DOM Elements
+        const gridHistorial = document.getElementById('historial-grid');
+        const formReporte = document.getElementById('form-reporte');
+        
+        // Función para renderizar tarjetas en el historial
+        function renderHistorial() {
+            gridHistorial.innerHTML = '';
+            
+            // Renderizamos los reportes en orden (los más nuevos primero)
+            [...reportes].reverse().forEach(reporte => {
+                let badgeClass, badgeText, badgeIcon;
+                
+                if (reporte.estado === "Concluido") {
+                    badgeClass = "bg-green-100 text-green-800 border-green-200";
+                    badgeIcon = "check_circle";
+                    badgeText = "Concluido";
+                } else if (reporte.estado === "Recibido") {
+                    badgeClass = "bg-blue-100 text-blue-800 border-blue-200";
+                    badgeIcon = "info";
+                    badgeText = "En revisión (Nuevo)";
+                }
+
+                const cardHTML = `
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden group hover:shadow-md transition-all animate-slide-up">
+                    <div class="h-40 bg-slate-200 relative overflow-hidden">
+                        <img src="${reporte.img}" alt="${reporte.categoria}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/400x200?text=Reporte'" />
+                        <div class="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm border ${badgeClass}">
+                            <span class="material-symbols-outlined text-[14px]">${badgeIcon}</span>
+                            <span class="text-[10px] font-bold uppercase tracking-wide">${badgeText}</span>
+                        </div>
+                    </div>
+                    <div class="p-5 flex flex-col h-[calc(100%-10rem)]">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 uppercase tracking-wider flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[12px]">${reporte.icon}</span>
+                                ${reporte.categoria}
+                            </span>
+                            <span class="text-xs text-slate-400 font-medium">${reporte.fecha}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-800 mb-1 text-sm md:text-base line-clamp-1" title="${reporte.ubicacion}">${reporte.ubicacion}</h4>
+                        <p class="text-xs md:text-sm text-slate-500 mb-4 line-clamp-2 flex-grow">${reporte.descripcion}</p>
+                        
+                        <div class="flex items-center justify-between border-t border-slate-100 pt-3 mt-auto">
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-[10px] text-slate-400 font-medium">Asignado a:</span>
+                                <span class="text-xs font-bold text-slate-700">${reporte.dependencia}</span>
+                            </div>
+                            <span class="text-[10px] text-slate-400 font-mono">${reporte.id}</span>
+                        </div>
+                    </div>
+                </div>
+                `;
+                gridHistorial.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+
+        // Sistema de Toasts (Notificaciones bonitas)
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const icon = type === 'success' ? 'check_circle' : 'info';
+            const color = type === 'success' ? 'bg-green-50 text-green-800 border-green-200' : 'bg-blue-50 text-blue-800 border-blue-200';
+            const iconColor = type === 'success' ? 'text-green-500' : 'text-blue-500';
+
+            const toast = document.createElement('div');
+            toast.className = `flex items-center gap-3 px-4 py-3 rounded-xl border shadow-lg ${color} animate-slide-up pointer-events-auto`;
+            toast.innerHTML = `
+                <span class="material-symbols-outlined ${iconColor}">${icon}</span>
+                <p class="text-sm font-semibold">${message}</p>
+            `;
+            
+            container.appendChild(toast);
+
+            // Eliminar toast después de 4 segundos
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(100%)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // Actualizar Dashboard stats
+        function updateDashboardStats() {
+            // Animar el contador (opcional, aquí solo cambiamos el texto)
+            document.getElementById('kpi-recibidas').innerText = estadisticas.recibidas.toLocaleString();
+            // Actualizar hero
+            document.getElementById('hero-concluidas-count').innerText = estadisticas.concluidas.toLocaleString();
+        }
+
+        // Manejar el envío del formulario
+        formReporte.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // UI Feedback: Mostrar spinner
+            const btn = document.getElementById('btn-submit');
+            const btnText = document.getElementById('btn-text');
+            const btnIcon = document.getElementById('btn-icon');
+            const spinner = document.getElementById('btn-spinner');
+            
+            btn.classList.add('opacity-90', 'cursor-not-allowed');
+            btnText.innerText = "Procesando con IA...";
+            btnIcon.classList.add('hidden');
+            spinner.classList.remove('hidden');
+
+            // Simulamos retraso de red y análisis IA
+            setTimeout(() => {
+                // Obtener datos
+                const ubicacion = document.getElementById('ubicacion').value;
+                const descripcion = document.getElementById('descripcion').value;
+                const categoriaNode = document.querySelector('input[name="categoria"]:checked');
+                const categoria = categoriaNode ? categoriaNode.value : "Otro";
+                
+                // Mapear iconos
+                const iconMap = { "Bacheo": "pothole", "Alumbrado": "lightbulb", "Agua Potable": "water_drop", "Otro": "more_horiz" };
+
+                // Crear objeto reporte
+                const newReporte = {
+                    id: "OAX-2026-" + Math.floor(Math.random() * 900 + 100), // Random ID
+                    categoria: categoria,
+                    ubicacion: ubicacion,
+                    descripcion: descripcion,
+                    estado: "Recibido",
+                    fecha: new Date().toLocaleDateString('es-MX'),
+                    dependencia: "Por asignar",
+                    img: "https://images.unsplash.com/photo-1584483756263-149b144bcbbd?auto=format&fit=crop&q=80&w=400", // Imagen genérica de reporte
+                    icon: iconMap[categoria]
+                };
+
+                // Guardar en la "base de datos"
+                reportes.push(newReporte);
+                estadisticas.recibidas++;
+                
+                // Restaurar UI del botón
+                btn.classList.remove('opacity-90', 'cursor-not-allowed');
+                btnText.innerText = "Enviar Solicitud al Sistema";
+                btnIcon.classList.remove('hidden');
+                spinner.classList.add('hidden');
+                
+                // Reset form
+                formReporte.reset();
+                
+                // Mostrar notificación y cambiar pestaña
+                showToast(`¡Reporte recibido! Folio generado: ${newReporte.id}`);
+                updateDashboardStats();
+                renderHistorial();
+                switchTab('historial');
+                
+            }, 1500); // 1.5 segundos de "carga"
+        });
+
+        // Navegación de pestañas
+        function switchTab(tabName) {
+            const tabs = ['reportar', 'historial', 'obras', 'dashboard'];
+            
+            tabs.forEach(tab => {
+                const btn = document.getElementById(`tab-${tab}`);
+                const content = document.getElementById(`content-${tab}`);
+                
+                if (tab === tabName) {
+                    btn.classList.remove('tab-inactive');
+                    btn.classList.add('tab-active');
+                    content.classList.remove('hidden');
+                } else {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('tab-inactive');
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        // Inicializar la app
+        document.addEventListener('DOMContentLoaded', () => {
+            renderHistorial();
+            updateDashboardStats();
+        });
+    </script>
+</body>
+</html>

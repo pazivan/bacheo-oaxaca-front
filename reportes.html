@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Reportes - Detección de Bacheo IA</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&family=Noto+Sans:wght@400;500;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#951a3e",
+                        "primary-dark": "#720029",
+                        "secondary": "#745b20",
+                        "background-light": "#fcf9f8",
+                        "critical": "#ba1a1a",
+                        "medium": "#745b20",
+                        "low": "#005a34"
+                    },
+                    fontFamily: {
+                        "display": ["Montserrat", "sans-serif"],
+                        "sans": ["Montserrat", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            background-color: #fcf9f8;
+            color: #1c1b1b;
+        }
+
+        .greca-pattern {
+            background-color: #951a3e;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M0 0h20v20H0V0zm20 20h20v20H20V20zM0 20h10v10H0V20zm10 10h10v10H10V30zM20 0h10v10H20V0zm10 10h10v10H30V10z' fill='%23720029' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .greca-border {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M0 0h10v10H0V0zm10 10h10v10H10V20z' fill='%23951a3e' fill-opacity='0.1'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased">
+    <div class="flex h-screen w-full overflow-hidden">
+
+        <aside class="w-64 flex-shrink-0 border-r border-gray-200 bg-white flex flex-col">
+            <div class="p-6 flex items-center gap-3">
+                <div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white greca-pattern">
+                    <svg class="w-6 h-6" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"
+                            fill="currentColor"></path>
+                    </svg>
+                </div>
+                <h2 class="text-lg font-bold tracking-tight text-primary">Sistema de gestion de baches</h2>
+            </div>
+            <nav class="flex-1 px-4 space-y-1">
+                <div class="mb-4">
+                    <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Panel de Acccion
+                    </p>
+                    <p class="px-3 text-sm text-gray-500 mb-2">Gobierno de Oaxaca</p>
+                </div>
+
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 rounded-xl hover:bg-gray-50 transition-colors"
+                    href="dashboard.html">
+                    <span class="material-symbols-outlined" data-icon="ListNumbers">format_list_numbered</span>
+                    Lista Crítica
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-white bg-primary rounded-xl shadow-md shadow-primary/20 transition-colors"
+                    href="#">
+                    <span class="material-symbols-outlined" data-icon="ChartLineUp"
+                        style="font-variation-settings: 'FILL' 1;">chart_data</span>
+                    Reportes
+                </a>
+
+            </nav>
+            <div class="p-4 border-t border-gray-100">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="size-10 rounded-full bg-gray-200 overflow-hidden border-2 border-primary/20 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-gray-400">person</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-gray-900">Admin User</p>
+                        <p class="text-xs text-gray-500">Supervisor de Zona</p>
+                    </div>
+                </div>
+                <a href="index.html"
+                    class="mt-4 flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined text-[16px]">logout</span> Cerrar Sesión
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col overflow-hidden bg-background-light">
+            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8">
+                <div class="flex items-center gap-4 flex-1">
+                    <div class="relative w-full max-w-md">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                            <span class="material-symbols-outlined" data-icon="MagnifyingGlass">search</span>
+                        </span>
+                        <input
+                            class="block w-full pl-10 pr-3 py-2 border-none bg-gray-100 rounded-xl focus:ring-primary focus:ring-2 sm:text-sm"
+                            placeholder="Buscar reportes o periodos..." type="text" />
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-8">
+                <div class="max-w-5xl mx-auto space-y-8">
+                    <div class="flex flex-col gap-2">
+                        <h1 class="text-3xl font-black text-gray-900 tracking-tight">Reportes de Mantenimiento</h1>
+                        <p class="text-gray-500 text-base">Historial obras ejecutados en la Zona Urbana de Oaxaca de
+                            Juárez.</p>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                            <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">folder_open</span>
+                                Historial de Documentos
+                            </h2>
+                        </div>
+
+                        <div class="divide-y divide-gray-100">
+
+                            <!-- Enero - Febrero -->
+                            <div class="flex items-center justify-between p-6 hover:bg-gray-50 transition-colors group">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined">description</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold text-gray-900">Reporte de obras ejecutadas: Enero
+                                            - Febrero</h4>
+                                        <p class="text-sm font-medium text-gray-500 mt-0.5">Publicado el 05 de Marzo,
+                                            2024 • 4.2 MB • PDF</p>
+                                    </div>
+                                </div>
+                                <button
+                                    class="flex items-center gap-2 px-5 py-2.5 bg-primary/10 text-primary font-bold rounded-lg hover:bg-primary/20 transition-colors active:scale-95 text-sm">
+                                    <span class="material-symbols-outlined text-[20px]">download</span>
+                                    Descargar
+                                </button>
+                            </div>
+
+                            <!-- Febrero - Marzo -->
+                            <div class="flex items-center justify-between p-6 hover:bg-gray-50 transition-colors group">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined">description</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold text-gray-900">Reporte de obras ejecutadas:
+                                            Febrero - Marzo</h4>
+                                        <p class="text-sm font-medium text-gray-500 mt-0.5">Publicado el 02 de Abril,
+                                            2024 • 3.8 MB • PDF</p>
+                                    </div>
+                                </div>
+                                <button
+                                    class="flex items-center gap-2 px-5 py-2.5 bg-primary/10 text-primary font-bold rounded-lg hover:bg-primary/20 transition-colors active:scale-95 text-sm">
+                                    <span class="material-symbols-outlined text-[20px]">download</span>
+                                    Descargar
+                                </button>
+                            </div>
+
+                            <!-- Marzo - Abril -->
+                            <div class="flex items-center justify-between p-6 hover:bg-gray-50 transition-colors group">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined">description</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold text-gray-900">Reporte de obras ejecutadas: Marzo
+                                            - Abril</h4>
+                                        <p class="text-sm font-medium text-gray-500 mt-0.5">Publicado el 10 de Mayo,
+                                            2024 • 5.1 MB • PDF</p>
+                                    </div>
+                                </div>
+                                <button
+                                    class="flex items-center gap-2 px-5 py-2.5 bg-primary/10 text-primary font-bold rounded-lg hover:bg-primary/20 transition-colors active:scale-95 text-sm">
+                                    <span class="material-symbols-outlined text-[20px]">download</span>
+                                    Descargar
+                                </button>
+                            </div>
+
+                            <!-- Abril - Mayo -->
+                            <div class="flex items-center justify-between p-6 hover:bg-gray-50 transition-colors group">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined">description</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold text-gray-900">Reporte de obras ejecutadas: Abril
+                                            - Mayo</h4>
+                                        <p class="text-sm font-medium text-gray-500 mt-0.5">Publicado el 04 de Junio,
+                                            2024 • 4.5 MB • PDF</p>
+                                    </div>
+                                </div>
+                                <button
+                                    class="flex items-center gap-2 px-5 py-2.5 bg-primary/10 text-primary font-bold rounded-lg hover:bg-primary/20 transition-colors active:scale-95 text-sm">
+                                    <span class="material-symbols-outlined text-[20px]">download</span>
+                                    Descargar
+                                </button>
+                            </div>
+
+                            <!-- Mayo - Junio -->
+                            <div class="flex items-center justify-between p-6 hover:bg-gray-50 transition-colors group">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined">description</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold text-gray-900">Reporte de obras ejecutadas: Mayo
+                                            - Junio</h4>
+                                        <p class="text-sm font-medium text-gray-500 mt-0.5">Publicado el 12 de Julio,
+                                            2024 • 3.9 MB • PDF</p>
+                                    </div>
+                                </div>
+                                <button
+                                    class="flex items-center gap-2 px-5 py-2.5 bg-primary/10 text-primary font-bold rounded-lg hover:bg-primary/20 transition-colors active:scale-95 text-sm">
+                                    <span class="material-symbols-outlined text-[20px]">download</span>
+                                    Descargar
+                                </button>
+                            </div>
+
+                            <!-- Junio - Julio -->
+                            <div class="flex items-center justify-between p-6 hover:bg-gray-50 transition-colors group">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined">description</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold text-gray-900">Reporte de obras ejecutadas: Junio
+                                            - Julio</h4>
+                                        <p class="text-sm font-medium text-gray-500 mt-0.5">Publicado el 08 de Agosto,
+                                            2024 • 4.7 MB • PDF</p>
+                                    </div>
+                                </div>
+                                <button
+                                    class="flex items-center gap-2 px-5 py-2.5 bg-primary/10 text-primary font-bold rounded-lg hover:bg-primary/20 transition-colors active:scale-95 text-sm">
+                                    <span class="material-symbols-outlined text-[20px]">download</span>
+                                    Descargar
+                                </button>
+                            </div>
+
+                            <!-- Julio - Agosto -->
+                            <div class="flex items-center justify-between p-6 hover:bg-gray-50 transition-colors group">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined">description</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold text-gray-900">Reporte de obras ejecutadas: Julio
+                                            - Agosto</h4>
+                                        <p class="text-sm font-medium text-gray-500 mt-0.5">Publicado el 05 de
+                                            Septiembre, 2024 • 5.0 MB • PDF</p>
+                                    </div>
+                                </div>
+                                <button
+                                    class="flex items-center gap-2 px-5 py-2.5 bg-primary/10 text-primary font-bold rounded-lg hover:bg-primary/20 transition-colors active:scale-95 text-sm">
+                                    <span class="material-symbols-outlined text-[20px]">download</span>
+                                    Descargar
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
