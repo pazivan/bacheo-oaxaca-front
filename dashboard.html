@@ -4,12 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Detección de Bacheo IA - Dashboard Oaxaca</title>
+    <title>Detección de Bacheo IA - Dashboard CDMX</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&family=Noto+Sans:wght@400;500;700&display=swap"
         rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
         rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
@@ -63,7 +64,7 @@
 <body class="font-sans antialiased">
     <div class="flex h-screen w-full overflow-hidden">
 
-        <aside class="w-64 flex-shrink-0 border-r border-gray-200 bg-white flex flex-col">
+        <aside class="w-64 flex-shrink-0 border-r border-gray-200 bg-white flex flex-col z-20">
             <div class="p-6 flex items-center gap-3">
                 <div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white greca-pattern">
                     <svg class="w-6 h-6" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -72,26 +73,61 @@
                             fill="currentColor"></path>
                     </svg>
                 </div>
-                <h2 class="text-lg font-bold tracking-tight text-primary">Sistema de gestion de baches</h2>
+                <h2 class="text-lg font-bold tracking-tight text-primary">Sistema de gestion</h2>
             </div>
             <nav class="flex-1 px-4 space-y-1">
                 <div class="mb-4">
-                    <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Panel de Acccion
+                    <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Panel de Accion
                     </p>
-                    <p class="px-3 text-sm text-gray-500 mb-2">Gobierno de Oaxaca</p>
+                    <p class="px-3 text-sm text-gray-500 mb-2">Gobierno de la Ciudad de México</p>
                 </div>
 
                 <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-white bg-primary rounded-xl shadow-md shadow-primary/20 transition-colors"
                     href="#">
                     <span class="material-symbols-outlined" data-icon="ListNumbers"
                         style="font-variation-settings: 'FILL' 1;">format_list_numbered</span>
-                    Lista Crítica
+                    Bandeja Principal
                 </a>
                 <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 rounded-xl hover:bg-gray-50 transition-colors"
                     href="reportes.html">
                     <span class="material-symbols-outlined" data-icon="ChartLineUp">chart_data</span>
                     Reportes
                 </a>
+
+                <div class="mt-8">
+                    <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Filtros (Estados)
+                    </p>
+                    <button onclick="filtrarEstado('')"
+                        class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-xl transition-colors text-left">
+                        Todos
+                        <span id="badge-todos"
+                            class="bg-gray-200 text-gray-700 py-0.5 px-2 rounded-full text-xs">0</span>
+                    </button>
+                    <button onclick="filtrarEstado('Validando')"
+                        class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50 rounded-xl transition-colors text-left">
+                        Validando
+                        <span id="badge-validando"
+                            class="bg-blue-100 text-blue-800 py-0.5 px-2 rounded-full text-xs">0</span>
+                    </button>
+                    <button onclick="filtrarEstado('Inspección')"
+                        class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-purple-700 hover:bg-purple-50 rounded-xl transition-colors text-left">
+                        Inspección
+                        <span id="badge-inspeccion"
+                            class="bg-purple-100 text-purple-800 py-0.5 px-2 rounded-full text-xs">0</span>
+                    </button>
+                    <button onclick="filtrarEstado('En reparación')"
+                        class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-yellow-700 hover:bg-yellow-50 rounded-xl transition-colors text-left">
+                        En Reparación
+                        <span id="badge-reparacion"
+                            class="bg-yellow-100 text-yellow-800 py-0.5 px-2 rounded-full text-xs">0</span>
+                    </button>
+                    <button onclick="filtrarEstado('Concluido')"
+                        class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-green-700 hover:bg-green-50 rounded-xl transition-colors text-left">
+                        Concluidos
+                        <span id="badge-concluidos"
+                            class="bg-green-100 text-green-800 py-0.5 px-2 rounded-full text-xs">0</span>
+                    </button>
+                </div>
 
             </nav>
             <div class="p-4 border-t border-gray-100">
@@ -102,7 +138,7 @@
                     </div>
                     <div>
                         <p class="text-sm font-bold text-gray-900">Admin User</p>
-                        <p class="text-xs text-gray-500">Supervisor de Zona</p>
+                        <p class="text-xs text-gray-500">Supervisor ADIP</p>
                     </div>
                 </div>
                 <a href="index.html"
@@ -113,7 +149,7 @@
         </aside>
 
         <main class="flex-1 flex flex-col overflow-hidden bg-background-light">
-            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8">
+            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 relative z-10">
                 <div class="flex items-center gap-4 flex-1">
                     <div class="relative w-full max-w-md">
                         <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
@@ -121,18 +157,35 @@
                         </span>
                         <input id="buscador-calles"
                             class="block w-full pl-10 pr-3 py-2 border-none bg-gray-100 rounded-xl focus:ring-primary focus:ring-2 sm:text-sm"
-                            placeholder="Buscar calles o colonias en la capital..." type="text" />
+                            placeholder="Buscar por folio, calle o colonia..." type="text" />
                     </div>
-                </div>
 
+                    <select id="filtro-categoria"
+                        onchange="renderizarTabla(document.getElementById('buscador-calles').value)"
+                        class="block w-48 pl-3 pr-8 py-2 border border-gray-200 bg-white rounded-xl focus:ring-primary focus:border-primary sm:text-sm text-gray-700 font-medium ml-2 shadow-sm">
+                        <option value="">Todas las Categorías</option>
+                        <option value="Bacheo">Bacheo y Asfalto</option>
+                        <option value="Alumbrado">Luminarias</option>
+                        <option value="Fuga de Agua">Fuga de Agua</option>
+                        <option value="Drenaje">Drenaje</option>
+                        <option value="Arbol">Árbol en Riesgo</option>
+                        <option value="Semaforo">Semáforo / Señalización</option>
+                        <option value="Otro">Otros Servicios</option>
+                    </select>
+                </div>
+                <button
+                    class="text-primary text-sm font-bold flex items-center gap-1 hover:bg-primary/5 px-3 py-1.5 rounded-lg transition-colors"
+                    onclick="location.reload()">
+                    <span class="material-symbols-outlined text-[16px]">refresh</span> Sincronizar
+                </button>
             </header>
 
             <div class="flex-1 overflow-y-auto p-8 space-y-8">
                 <div class="flex flex-col gap-2">
-                    <h1 class="text-3xl font-black text-gray-900 tracking-tight">Resumen de Zonas Crítica de la ciudad
-                    </h1>
-                    <p class="text-gray-500 text-base">Análisis de daños estructurales capturados este mes para la Zona
-                        Urbana de Oaxaca de Juárez.</p>
+                    <h1 class="text-3xl font-black text-gray-900 tracking-tight" id="titulo-vista">Solicitudes
+                        Ciudadanas</h1>
+                    <p class="text-gray-500 text-base">Análisis de daños estructurales capturados en la Zona Urbana de
+                        CDMX.</p>
                 </div>
 
                 <!-- Contenedor del Mapa de Calor Estático -->
@@ -149,47 +202,49 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div id="seccion-tabla" class="grid grid-cols-1 lg:grid-cols-3 gap-8 scroll-mt-24">
 
                     <div class="lg:col-span-2 space-y-6">
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div
+                            class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden h-full flex flex-col">
                             <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-                                <h2 class="text-lg font-bold text-gray-900">Lista de calles críticas</h2>
-
+                                <h2 class="text-lg font-bold text-gray-900">Bandeja de Entradas</h2>
                             </div>
-                            <div class="overflow-x-auto h-[400px]">
+                            <div class="overflow-y-auto flex-1 h-[400px]">
                                 <table class="w-full text-left relative">
                                     <thead
-                                        class="bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wider sticky top-0 shadow-sm">
+                                        class="bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wider sticky top-0 shadow-sm z-10">
                                         <tr>
-                                            <th class="px-6 py-4">Nombre de Calle</th>
-                                            <th class="px-6 py-4">Zona</th>
-                                            <th class="px-6 py-4">Condicion</th>
-                                            <th class="px-6 py-4">Visualizar</th>
+                                            <th class="px-6 py-4">Folio / Categoria</th>
+                                            <th class="px-6 py-4">Ubicación</th>
+                                            <th class="px-6 py-4">Estado</th>
+                                            <th class="px-6 py-4">Acción</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tabla-prioridades" class="divide-y divide-gray-100">
+                                        <!-- Inyectado por JS -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
 
-
                     </div>
 
+                    <!-- PANEL DERECHO DE DETALLES -->
                     <div class="space-y-6">
                         <div class="grid grid-cols-1 gap-4">
-                            <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm relative overflow-hidden"
+                            <div id="card-bg-imagen"
+                                class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm relative overflow-hidden h-32 flex flex-col justify-end transition-all"
                                 style="background-image: url('./src/assets/bache.png'); background-size: cover; background-position: center;">
                                 <div class="absolute inset-0 bg-slate-900/60 z-0"></div>
                                 <div class="relative z-10">
-                                    <p class="text-sm font-medium text-gray-300 mb-1">Baches Identificados</p>
+                                    <p class="text-sm font-medium text-gray-300 mb-1">Problema Reportado</p>
                                     <div class="flex items-baseline gap-2">
-                                        <span id="detalle-baches" class="text-3xl font-black text-white">-</span>
-                                        <span class="text-xs text-gray-400 font-bold">En la calle seleccionada</span>
+                                        <span id="detalle-categoria" class="text-2xl font-black text-white">-</span>
                                     </div>
                                 </div>
                             </div>
+
                             <div
                                 class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm relative overflow-hidden">
                                 <div class="absolute bottom-0 left-0 w-16 h-16 greca-border opacity-50 rotate-180">
@@ -204,17 +259,22 @@
 
                         <div class="greca-pattern rounded-xl p-6 text-white shadow-lg shadow-primary/20">
                             <h3 class="font-bold mb-3 flex items-center gap-2">
-                                <span class="material-symbols-outlined" data-icon="Lightbulb">lightbulb</span>
-                                Análisis Estratégico
+                                <span class="material-symbols-outlined" data-icon="Lightbulb">smart_toy</span>
+                                Análisis Estratégico IA
                             </h3>
-                            <p id="detalle-analisis" class="text-sm opacity-90 leading-relaxed font-medium">
-                                Selecciona una calle de la lista para ver el reporte detallado generado por el algoritmo
-                                de visión computacional.
+                            <p id="detalle-analisis"
+                                class="text-sm opacity-90 leading-relaxed font-medium min-h-[80px]">
+                                Selecciona un reporte de la lista para ver la descripción y gestionar el flujo de
+                                validación.
                             </p>
-                            <button
-                                class="mt-6 w-full py-3 bg-white text-primary font-bold rounded-lg hover:bg-gray-100 transition-all shadow-md active:scale-95 text-sm uppercase tracking-wider">
-                                Generar Orden de Trabajo
-                            </button>
+
+                            <!-- Contenedor del Botón Dinámico -->
+                            <div id="btn-accion-container" class="mt-6">
+                                <button disabled
+                                    class="w-full py-3 bg-white/20 text-white font-bold rounded-lg cursor-not-allowed text-sm uppercase tracking-wider">
+                                    Selecciona un reporte
+                                </button>
+                            </div>
                         </div>
 
                     </div>
@@ -224,18 +284,34 @@
         </main>
     </div>
 
-    <!-- Modal de Evidencia -->
+    <!-- Modal de Evidencia Mejorado -->
     <div id="modal-detalle"
         class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden transform transition-all">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden transform transition-all">
             <div class="p-4 md:p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-                <h3 id="modal-titulo" class="text-xl font-bold text-gray-900">Evidencia Fotográfica - Calzada Madero
-                </h3>
-
+                <h3 id="modal-titulo" class="text-xl font-bold text-gray-900">Evidencia del Reporte</h3>
             </div>
-            <div class="p-6 bg-gray-100 flex justify-center">
-                <img id="modal-imagen" src="./src/assets/cal-madero.jpg" alt="Evidencia de la calle"
-                    class="w-full h-auto max-h-[60vh] object-contain rounded shadow-sm border border-gray-200">
+            <div class="p-6 bg-gray-100">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex justify-center bg-white rounded shadow-sm border border-gray-200 p-2">
+                        <img id="modal-imagen" src="" alt="Evidencia de la calle"
+                            class="w-full h-auto max-h-[50vh] object-contain rounded">
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Ubicación
+                                Registrada</h4>
+                            <p id="modal-ubicacion" class="text-sm text-gray-900 font-medium"></p>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Descripción del
+                                Ciudadano</h4>
+                            <div class="bg-white p-3 rounded shadow-sm border border-gray-200">
+                                <p id="modal-descripcion" class="text-sm text-gray-700 italic"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-end">
                 <button onclick="cerrarModal()"
@@ -246,52 +322,136 @@
         </div>
     </div>
 
+    <!-- LÓGICA DE DATOS -->
     <script>
-        // Datos simulados. Notarás que el ID 4 tiene nivel "Medio", el script lo ignorará automáticamente.
-        const callesPrioritarias = [
-            { id: 1, nombre: "Av. Universidad 120", colonia: "Zona Sur", gravedad: "Crítico", baches: 31, costo: "110,000", riesgo: "Riesgo alto para transporte público. Grietas profundas identificadas cerca del crucero de 5 Señores.", imagen: "Av.-Universidad-120.jpg" },
-            { id: 2, nombre: "Calzada Madero", colonia: "Centro Histórico", gravedad: "Crítico", baches: 24, costo: "85,000", riesgo: "Zona de alto flujo peatonal y turístico. Requiere atención urgente para evitar daño estructural al adoquín.", imagen: "cal-madero.jpg" },
-            { id: 3, nombre: "Calz. Héroes de Chapultepec", colonia: "Zona Norte", gravedad: "Crítico", baches: 28, costo: "95,000", riesgo: "Deterioro severo en carril central, afectando el flujo vehicular hacia la central camionera.", imagen: "cal-heroes.jpg" },
-            { id: 4, nombre: "Calzada de la República", colonia: "Centro Histórico", gravedad: "Medio", baches: 12, costo: "45,000", riesgo: "Deterioro superficial.", imagen: null }, // Esta no se mostrará
-            { id: 5, nombre: "Símbolos Patrios", colonia: "Zona Sur", gravedad: "Crítico", baches: 42, costo: "150,000", riesgo: "Zanja transversal detectada, peligro inminente de ponchaduras en vía rápida.", imagen: "simbolos-patrios.jpg" },
-            { id: 6, nombre: "JP garcia", colonia: "Centro histórico", gravedad: "Crítico", baches: 28, costo: "95,000", riesgo: "Deterioro severo en carril central, afectando el flujo vehicular hacia la central camionera.", imagen: "JP-garcia.jpg" }]
+        let reportesDB = [];
+        let estadoFiltro = ""; // Vacío = Todos
+        let reporteSeleccionado = null;
+
+        // Cargar datos sincronizados desde localStorage
+        function cargarDatos() {
+            const data = localStorage.getItem('cdmx_reportes');
+            if (data) {
+                reportesDB = JSON.parse(data);
+                // Invertimos para ver primero los más recientes
+                reportesDB.reverse();
+            }
+            actualizarContadores();
+        }
+
+        function actualizarContadores() {
+            const catFiltro = document.getElementById('filtro-categoria') ? document.getElementById('filtro-categoria').value : "";
+            let baseData = reportesDB;
+            if (catFiltro !== "") {
+                baseData = reportesDB.filter(r => r.categoria === catFiltro);
+            }
+
+            document.getElementById('badge-todos').innerText = baseData.length;
+            document.getElementById('badge-validando').innerText = baseData.filter(r => r.estado.includes('Validando')).length;
+            document.getElementById('badge-inspeccion').innerText = baseData.filter(r => r.estado.includes('Inspección')).length;
+            document.getElementById('badge-reparacion').innerText = baseData.filter(r => r.estado.includes('reparación')).length;
+            document.getElementById('badge-concluidos').innerText = baseData.filter(r => r.estado.includes('Concluido')).length;
+        }
 
         const tabla = document.getElementById('tabla-prioridades');
 
-        function renderizarTabla(filtro = "") {
+        function renderizarTabla(textoBusqueda = "") {
+            actualizarContadores(); // Actualizamos badges según la categoría actual
+
             tabla.innerHTML = "";
 
-            // 1. Filtramos para asegurarnos de usar SOLO las críticas y aplicar el filtro
-            const soloCriticas = callesPrioritarias.filter(calle => {
-                const esCritica = calle.gravedad === "Crítico";
-                const texto = filtro.toLowerCase();
-                const coincideBusqueda = calle.nombre.toLowerCase().includes(texto) || 
-                                         calle.colonia.toLowerCase().includes(texto);
-                return esCritica && coincideBusqueda;
-            });
+            let filtrados = reportesDB;
 
-            // 2. Tomamos solo las primeras 50 (En caso de que la API mande más)
-            const top50 = soloCriticas.slice(0, 50);
+            // Filtro por estado en sidebar
+            if (estadoFiltro !== "") {
+                filtrados = filtrados.filter(r => r.estado.includes(estadoFiltro));
+            }
 
-            // 3. Dibujamos la tabla
-            top50.forEach(calle => {
-                const badgeClass = "bg-red-50 text-critical border-red-100";
-                const dotClass = "bg-critical";
+            // Filtro de Categoría
+            const catFiltro = document.getElementById('filtro-categoria').value;
+            if (catFiltro !== "") {
+                filtrados = filtrados.filter(r => r.categoria === catFiltro);
+            }
+
+            // Filtro por buscador
+            if (textoBusqueda !== "") {
+                const txt = textoBusqueda.toLowerCase();
+                filtrados = filtrados.filter(r =>
+                    r.id.toLowerCase().includes(txt) ||
+                    r.ubicacion.toLowerCase().includes(txt) ||
+                    r.categoria.toLowerCase().includes(txt)
+                );
+            }
+
+            if (filtrados.length === 0) {
+                tabla.innerHTML = `<tr><td colspan="4" class="px-6 py-12 text-center text-gray-500 font-medium">No se encontraron reportes.</td></tr>`;
+                return;
+            }
+
+            filtrados.forEach(calle => {
+                let badgeClass = "bg-blue-50 text-blue-700 border-blue-200";
+                let dotClass = "bg-blue-600";
+
+                if (calle.estado.includes('Inspección')) {
+                    badgeClass = "bg-purple-50 text-purple-700 border-purple-200";
+                    dotClass = "bg-purple-600";
+                } else if (calle.estado.includes('reparación')) {
+                    badgeClass = "bg-yellow-50 text-yellow-700 border-yellow-200";
+                    dotClass = "bg-yellow-500";
+                } else if (calle.estado.includes('Concluido')) {
+                    badgeClass = "bg-green-50 text-green-700 border-green-200";
+                    dotClass = "bg-green-600";
+                }
+
+                // Resaltar la fila si está seleccionada
+                const isSelected = reporteSeleccionado && reporteSeleccionado.id === calle.id;
+                const rowClass = isSelected ? "bg-gray-50 border-l-4 border-l-primary" : "hover:bg-gray-50 border-l-4 border-l-transparent";
 
                 const fila = `
-                <tr class="hover:bg-gray-50 transition-colors cursor-pointer border-b border-gray-50" onclick="seleccionarCalle(${calle.id})">
-                    <td class="px-6 py-4 text-sm font-medium text-gray-900">${calle.nombre}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600">${calle.colonia}</td>
+                <tr class="${rowClass} transition-colors cursor-pointer border-b border-gray-50" onclick="seleccionarCalle('${calle.id}')">
                     <td class="px-6 py-4">
-                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold ${badgeClass} border">
-                            <span class="size-1.5 rounded-full ${dotClass}"></span> ${calle.gravedad}
+                        <p class="text-sm font-bold text-gray-900">${calle.id}</p>
+                        <p class="text-xs text-gray-500">${calle.categoria}</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p class="text-sm text-gray-800 line-clamp-1" title="${calle.ubicacion}">${calle.ubicacion}</p>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase">${calle.dependencia}</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${badgeClass} border uppercase tracking-wider">
+                            <span class="size-1.5 rounded-full ${dotClass}"></span> ${calle.estado.replace(' (IA / Dron)', '')}
                         </span>
                     </td>
-                    <td class="px-6 py-4 text-sm"><button type="button" onclick="abrirModal(event, ${calle.id}, '${calle.nombre}')" class="text-primary font-bold hover:text-primary-dark cursor-pointer bg-primary/10 px-3 py-1.5 rounded-lg transition-colors">Visual</button></td>
+                    <td class="px-6 py-4 text-sm">
+                        <button type="button" onclick="abrirModal(event, '${calle.id}')" class="text-primary font-bold hover:text-primary-dark cursor-pointer bg-primary/10 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]">image</span> Evidencia
+                        </button>
+                    </td>
                 </tr>
-            `;
+                `;
                 tabla.innerHTML += fila;
             });
+        }
+
+        window.filtrarEstado = function (estado) {
+            estadoFiltro = estado;
+            reporteSeleccionado = null;
+            document.getElementById('buscador-calles').value = "";
+            renderizarTabla();
+
+            // Limpiar panel derecho
+            document.getElementById('detalle-categoria').textContent = "-";
+            document.getElementById('detalle-costo').textContent = "-";
+            document.getElementById('detalle-analisis').innerHTML = "Selecciona un reporte de la lista para ver la descripción y gestionar el flujo de validación.";
+            document.getElementById('card-bg-imagen').style.backgroundImage = "url('./src/assets/bache.png')";
+            document.getElementById('btn-accion-container').innerHTML = `
+                <button disabled class="w-full py-3 bg-white/20 text-white font-bold rounded-lg cursor-not-allowed text-sm uppercase tracking-wider">
+                    Selecciona un reporte
+                </button>
+            `;
+
+            // Bajar automáticamente hacia la tabla
+            document.getElementById('seccion-tabla').scrollIntoView({ behavior: 'smooth' });
         }
 
         const buscador = document.getElementById('buscador-calles');
@@ -303,29 +463,194 @@
 
         // Función global para actualizar el panel derecho
         window.seleccionarCalle = function (id) {
-            const info = callesPrioritarias.find(c => c.id === id);
+            const info = reportesDB.find(c => c.id === id);
             if (!info) return;
 
-            document.getElementById('detalle-baches').textContent = info.baches;
-            document.getElementById('detalle-costo').textContent = `$${info.costo}`;
-            document.getElementById('detalle-analisis').innerHTML = `<strong>Análisis IA para ${info.nombre}:</strong> <br><br> ${info.riesgo}`;
+            reporteSeleccionado = info;
+            renderizarTabla(buscador.value); // Re-render para mostrar clase activa en tabla
+
+            document.getElementById('detalle-categoria').textContent = info.categoria;
+            document.getElementById('detalle-costo').textContent = info.costo ? info.costo : "Pendiente";
+            document.getElementById('detalle-analisis').innerHTML = `<strong>Folio ${info.id}:</strong><br><br>${info.descripcion}`;
+
+            // Actualizar imagen de fondo si tiene, si no poner default
+            if (info.img) {
+                document.getElementById('card-bg-imagen').style.backgroundImage = `url('${info.img}')`;
+            } else {
+                document.getElementById('card-bg-imagen').style.backgroundImage = "url('./src/assets/bache.png')";
+            }
+
+            // Construir Botón de Acción dependiendo del estado
+            const containerBtn = document.getElementById('btn-accion-container');
+            if (info.estado.includes('Validando')) {
+                containerBtn.innerHTML = `
+                    <div class="mt-4">
+                        <label class="block text-[10px] font-bold text-white mb-2 uppercase tracking-widest flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]">calendar_month</span> Fecha de Inspección (Dron/Cuadrilla):
+                        </label>
+                        <input type="date" id="fecha-inspeccion" class="block w-full rounded-lg border-none text-gray-800 shadow-sm focus:ring-2 focus:ring-white sm:text-sm px-4 py-2.5 mb-3 bg-white/90">
+                        <button onclick="agendarInspeccion('${info.id}')" id="btn-magico" class="w-full py-3 bg-white text-primary font-bold rounded-lg hover:bg-gray-100 transition-all shadow-md active:scale-95 text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined">event_available</span> Confirmar Agenda
+                        </button>
+                    </div>
+                `;
+            } else if (info.estado.includes('Inspección')) {
+                containerBtn.innerHTML = `
+                    <button onclick="lanzarDron('${info.id}')" id="btn-magico" class="w-full py-3 bg-white text-primary font-bold rounded-lg hover:bg-gray-100 transition-all shadow-md active:scale-95 text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">payments</span> Asignar Presupuesto
+                    </button>
+                `;
+            } else if (info.estado.includes('reparación')) {
+                containerBtn.innerHTML = `
+                    <button onclick="concluirServicio('${info.id}')" id="btn-magico" class="w-full py-3 bg-green-500 hover:bg-green-400 text-white font-bold rounded-lg transition-all shadow-md active:scale-95 text-sm uppercase tracking-wider flex items-center justify-center gap-2 border border-green-400">
+                        <span class="material-symbols-outlined">task_alt</span> Finalizar Trabajo
+                    </button>
+                `;
+            } else {
+                containerBtn.innerHTML = `
+                    <button disabled class="w-full py-3 bg-white/20 text-white/50 font-bold rounded-lg cursor-not-allowed text-sm uppercase tracking-wider border border-white/20">
+                        Servicio Concluido
+                    </button>
+                `;
+            }
         }
 
-        window.abrirModal = function (event, id, nombre) {
-            // Evitamos que se dispare el evento seleccionarCalle de la fila al mismo tiempo
+        // ACCIONES DE ESTADO
+        window.agendarInspeccion = function (id) {
+            const fechaInput = document.getElementById('fecha-inspeccion').value;
+            if (!fechaInput) {
+                alert("Por favor, selecciona una fecha en el calendario para agendar la inspección.");
+                return;
+            }
+
+            // Formatear la fecha para que se vea legible
+            const partesFecha = fechaInput.split('-');
+            const fechaFormateada = `${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0]}`;
+
+            const btn = document.getElementById('btn-magico');
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Agendando...`;
+            btn.classList.add('opacity-90', 'cursor-not-allowed');
+
+            setTimeout(() => {
+                const idx = reportesDB.findIndex(r => r.id === id);
+                if (idx !== -1) {
+                    reportesDB[idx].estado = "Inspección Programada";
+                    const correo = reportesDB[idx].correo;
+
+                    guardarDatosYRefrescar();
+                    seleccionarCalle(id);
+
+                    // Enviar Correo Real al Ciudadano
+                    if (correo) {
+                        fetch('http://localhost:3000/api/notificar-estado', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                correo: correo,
+                                folio: id,
+                                nuevoEstado: "Inspección Programada",
+                                mensaje: `Tu reporte ha sido validado. Hemos agendado a un Operador de Dron y una Cuadrilla de Sobse para acudir al lugar el día <strong>${fechaFormateada}</strong>. Realizarán un levantamiento de daños exacto para asignar el presupuesto público necesario.`
+                            })
+                        }).catch(e => console.error("Error al enviar email:", e));
+                    }
+
+                    alert(`✅ Inspección agendada para el ${fechaFormateada}.\nSe ha enviado un correo electrónico automático al ciudadano notificándole la fecha.`);
+                }
+            }, 1000);
+        }
+
+        window.lanzarDron = function (id) {
+            const btn = document.getElementById('btn-magico');
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Procesando Presupuesto...`;
+            btn.classList.add('opacity-90', 'cursor-not-allowed');
+
+            setTimeout(() => {
+                const idx = reportesDB.findIndex(r => r.id === id);
+                if (idx !== -1) {
+                    reportesDB[idx].estado = "En reparación";
+                    // Simular presupuesto
+                    reportesDB[idx].costo = (Math.floor(Math.random() * 50) + 10).toLocaleString() + ",000";
+                    const correo = reportesDB[idx].correo;
+
+                    guardarDatosYRefrescar();
+                    seleccionarCalle(id);
+
+                    // Enviar Correo Real al Ciudadano
+                    if (correo) {
+                        fetch('http://localhost:3000/api/notificar-estado', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                correo: correo,
+                                folio: id,
+                                nuevoEstado: "En Reparación",
+                                mensaje: `La inspección concluyó y se ha asignado un presupuesto oficial de $${reportesDB[idx].costo} MXN. Las cuadrillas están trabajando en la resolución del problema.`
+                            })
+                        }).catch(e => console.error("Error al enviar email:", e));
+                    }
+
+                    alert(`✅ Inspección Finalizada.\nPresupuesto asignado: $${reportesDB[idx].costo} MXN.\nEnviado a Reparación y notificado por correo.`);
+                }
+            }, 1500);
+        }
+
+        window.concluirServicio = function (id) {
+            const btn = document.getElementById('btn-magico');
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Guardando...`;
+
+            setTimeout(() => {
+                const idx = reportesDB.findIndex(r => r.id === id);
+                if (idx !== -1) {
+                    reportesDB[idx].estado = "Concluido";
+                    // Cambiamos imagen de evidencia a arreglado
+                    reportesDB[idx].img = "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&q=80&w=400";
+                    const correo = reportesDB[idx].correo;
+
+                    guardarDatosYRefrescar();
+                    seleccionarCalle(id);
+
+                    if (correo) {
+                        fetch('http://localhost:3000/api/notificar-estado', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                correo: correo,
+                                folio: id,
+                                nuevoEstado: "Concluido",
+                                mensaje: "¡Buenas noticias! Tu solicitud ciudadana ha sido concluida exitosamente. Puedes revisar el historial y las fotografías de la evidencia finalizada en nuestra plataforma."
+                            })
+                        }).catch(e => console.error("Error al enviar email:", e));
+                    }
+
+                    alert(`✅ Servicio marcado como Concluido.\nEl ciudadano ha sido notificado.`);
+                }
+            }, 1000);
+        }
+
+        function guardarDatosYRefrescar() {
+            // Revertir para guardarlo en el orden original
+            const dataToSave = [...reportesDB].reverse();
+            localStorage.setItem('cdmx_reportes', JSON.stringify(dataToSave));
+
+            cargarDatos(); // Vuelve a leer (y reversea)
+            renderizarTabla(buscador.value);
+        }
+
+
+        // MODAL
+        window.abrirModal = function (event, id) {
             event.stopPropagation();
+            const info = reportesDB.find(c => c.id === id);
 
-            const info = callesPrioritarias.find(c => c.id === id);
-
-            // Si la calle tiene una imagen definida, abrimos el modal
-            if (info && info.imagen) {
-                document.getElementById('modal-titulo').textContent = `Evidencia Fotográfica - ${nombre}`;
-                document.getElementById('modal-imagen').src = `./src/assets/${info.imagen}`;
+            if (info && info.img) {
+                document.getElementById('modal-titulo').textContent = `Evidencia: ${info.id}`;
+                document.getElementById('modal-imagen').src = info.img;
+                document.getElementById('modal-ubicacion').textContent = info.ubicacion;
+                document.getElementById('modal-descripcion').textContent = `"${info.descripcion}"`;
                 document.getElementById('modal-detalle').classList.remove('hidden');
             } else {
-                // Seleccionamos la calle en el panel derecho y podemos mostrar una alerta (opcional)
                 seleccionarCalle(id);
-                alert(`Aún no hay imágenes de evidencia disponibles para ${nombre}.`);
+                alert(`Aún no hay imágenes de evidencia adjuntas para el folio ${info.id}.`);
             }
         }
 
@@ -334,8 +659,10 @@
         }
 
         // Ejecutar al iniciar
+        cargarDatos();
         renderizarTabla();
-        seleccionarCalle(1); // Carga la primera calle automáticamente
+        if (reportesDB.length > 0) seleccionarCalle(reportesDB[0].id);
+
     </script>
 
 </body>
