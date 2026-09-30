@@ -328,29 +328,39 @@
         let estadoFiltro = ""; // Vacío = Todos
         let reporteSeleccionado = null;
 
-        // Cargar datos sincronizados desde localStorage
-        function cargarDatos() {
-            const data = localStorage.getItem('cdmx_reportes');
-            if (data) {
-                reportesDB = JSON.parse(data);
-                // Invertimos para ver primero los más recientes
-                reportesDB.reverse();
+        // Cargar datos reales desde PostgreSQL
+        async function cargarDatos() {
+            try {
+                const response = await fetch('http://localhost:3000/api/reportes');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    reportesDB = data;
+                    actualizarContadores();
+                    renderizarTabla();
+                    if(reportesDB.length > 0 && !reporteSeleccionado) {
+                        seleccionarCalle(reportesDB[0].id);
+                    }
+                } else {
+                    console.error("Error del backend:", data.error);
+                }
+            } catch (error) {
+                console.error("No se pudo conectar con la BD:", error);
             }
-            actualizarContadores();
         }
 
         function actualizarContadores() {
             const catFiltro = document.getElementById('filtro-categoria') ? document.getElementById('filtro-categoria').value : "";
             let baseData = reportesDB;
             if (catFiltro !== "") {
-                baseData = reportesDB.filter(r => r.categoria === catFiltro);
+                baseData = reportesDB.filter(r => r.categoria && r.categoria === catFiltro);
             }
 
             document.getElementById('badge-todos').innerText = baseData.length;
-            document.getElementById('badge-validando').innerText = baseData.filter(r => r.estado.includes('Validando')).length;
-            document.getElementById('badge-inspeccion').innerText = baseData.filter(r => r.estado.includes('Inspección')).length;
-            document.getElementById('badge-reparacion').innerText = baseData.filter(r => r.estado.includes('reparación')).length;
-            document.getElementById('badge-concluidos').innerText = baseData.filter(r => r.estado.includes('Concluido')).length;
+            document.getElementById('badge-validando').innerText = baseData.filter(r => r.estado && r.estado.toLowerCase().includes('validando')).length;
+            document.getElementById('badge-inspeccion').innerText = baseData.filter(r => r.estado && r.estado.toLowerCase().includes('inspecci')).length;
+            document.getElementById('badge-reparacion').innerText = baseData.filter(r => r.estado && r.estado.toLowerCase().includes('reparaci')).length;
+            document.getElementById('badge-concluidos').innerText = baseData.filter(r => r.estado && r.estado.toLowerCase().includes('concluido')).length;
         }
 
         const tabla = document.getElementById('tabla-prioridades');
@@ -364,22 +374,27 @@
 
             // Filtro por estado en sidebar
             if (estadoFiltro !== "") {
-                filtrados = filtrados.filter(r => r.estado.includes(estadoFiltro));
+                const searchEstado = estadoFiltro.toLowerCase().replace('ó', 'o'); // Para quitar tildes al buscar
+                filtrados = filtrados.filter(r => {
+                    if(!r.estado) return false;
+                    const rE = r.estado.toLowerCase().replace('ó', 'o');
+                    return rE.includes(searchEstado);
+                });
             }
 
             // Filtro de Categoría
             const catFiltro = document.getElementById('filtro-categoria').value;
             if (catFiltro !== "") {
-                filtrados = filtrados.filter(r => r.categoria === catFiltro);
+                filtrados = filtrados.filter(r => r.categoria && r.categoria === catFiltro);
             }
 
             // Filtro por buscador
             if (textoBusqueda !== "") {
                 const txt = textoBusqueda.toLowerCase();
-                filtrados = filtrados.filter(r =>
-                    r.id.toLowerCase().includes(txt) ||
-                    r.ubicacion.toLowerCase().includes(txt) ||
-                    r.categoria.toLowerCase().includes(txt)
+                filtrados = filtrados.filter(r => 
+                    (r.id && r.id.toLowerCase().includes(txt)) || 
+                    (r.ubicacion && r.ubicacion.toLowerCase().includes(txt)) ||
+                    (r.categoria && r.categoria.toLowerCase().includes(txt))
                 );
             }
 
@@ -391,14 +406,17 @@
             filtrados.forEach(calle => {
                 let badgeClass = "bg-blue-50 text-blue-700 border-blue-200";
                 let dotClass = "bg-blue-600";
+                
+                const safeEstado = calle.estado || "Desconocido";
+                const lowerEstado = safeEstado.toLowerCase();
 
-                if (calle.estado.includes('Inspección')) {
+                if (lowerEstado.includes('inspecci') || lowerEstado.includes('asignada')) {
                     badgeClass = "bg-purple-50 text-purple-700 border-purple-200";
                     dotClass = "bg-purple-600";
-                } else if (calle.estado.includes('reparación')) {
+                } else if (lowerEstado.includes('reparaci')) {
                     badgeClass = "bg-yellow-50 text-yellow-700 border-yellow-200";
                     dotClass = "bg-yellow-500";
-                } else if (calle.estado.includes('Concluido')) {
+                } else if (lowerEstado.includes('concluido') || lowerEstado.includes('resuelta')) {
                     badgeClass = "bg-green-50 text-green-700 border-green-200";
                     dotClass = "bg-green-600";
                 }
@@ -410,16 +428,16 @@
                 const fila = `
                 <tr class="${rowClass} transition-colors cursor-pointer border-b border-gray-50" onclick="seleccionarCalle('${calle.id}')">
                     <td class="px-6 py-4">
-                        <p class="text-sm font-bold text-gray-900">${calle.id}</p>
-                        <p class="text-xs text-gray-500">${calle.categoria}</p>
+                        <p class="text-sm font-bold text-gray-900">${calle.id || '-'}</p>
+                        <p class="text-xs text-gray-500">${calle.categoria || 'Sin Categoría'}</p>
                     </td>
                     <td class="px-6 py-4">
-                        <p class="text-sm text-gray-800 line-clamp-1" title="${calle.ubicacion}">${calle.ubicacion}</p>
-                        <p class="text-[10px] text-gray-400 font-bold uppercase">${calle.dependencia}</p>
+                        <p class="text-sm text-gray-800 line-clamp-1" title="${calle.ubicacion || ''}">${calle.ubicacion || '-'}</p>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase">${calle.dependencia || '-'}</p>
                     </td>
                     <td class="px-6 py-4">
                         <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${badgeClass} border uppercase tracking-wider">
-                            <span class="size-1.5 rounded-full ${dotClass}"></span> ${calle.estado.replace(' (IA / Dron)', '')}
+                            <span class="size-1.5 rounded-full ${dotClass}"></span> ${safeEstado.replace(' (IA / Dron)', '')}
                         </span>
                     </td>
                     <td class="px-6 py-4 text-sm">
@@ -482,7 +500,9 @@
 
             // Construir Botón de Acción dependiendo del estado
             const containerBtn = document.getElementById('btn-accion-container');
-            if (info.estado.includes('Validando')) {
+            const safeEstado2 = (info.estado || "").toLowerCase();
+
+            if (safeEstado2.includes('validando') || safeEstado2.includes('reportado') || safeEstado2.includes('recibida')) {
                 containerBtn.innerHTML = `
                     <div class="mt-4">
                         <label class="block text-[10px] font-bold text-white mb-2 uppercase tracking-widest flex items-center gap-1">
@@ -494,13 +514,13 @@
                         </button>
                     </div>
                 `;
-            } else if (info.estado.includes('Inspección')) {
+            } else if (safeEstado2.includes('inspecci') || safeEstado2.includes('asignada')) {
                 containerBtn.innerHTML = `
                     <button onclick="lanzarDron('${info.id}')" id="btn-magico" class="w-full py-3 bg-white text-primary font-bold rounded-lg hover:bg-gray-100 transition-all shadow-md active:scale-95 text-sm uppercase tracking-wider flex items-center justify-center gap-2">
                         <span class="material-symbols-outlined">payments</span> Asignar Presupuesto
                     </button>
                 `;
-            } else if (info.estado.includes('reparación')) {
+            } else if (safeEstado2.includes('reparaci')) {
                 containerBtn.innerHTML = `
                     <button onclick="concluirServicio('${info.id}')" id="btn-magico" class="w-full py-3 bg-green-500 hover:bg-green-400 text-white font-bold rounded-lg transition-all shadow-md active:scale-95 text-sm uppercase tracking-wider flex items-center justify-center gap-2 border border-green-400">
                         <span class="material-symbols-outlined">task_alt</span> Finalizar Trabajo
@@ -597,16 +617,15 @@
         window.concluirServicio = function (id) {
             const btn = document.getElementById('btn-magico');
             btn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Guardando...`;
-
+            
             setTimeout(() => {
                 const idx = reportesDB.findIndex(r => r.id === id);
                 if (idx !== -1) {
                     reportesDB[idx].estado = "Concluido";
-                    // Cambiamos imagen de evidencia a arreglado
                     reportesDB[idx].img = "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&q=80&w=400";
                     const correo = reportesDB[idx].correo;
 
-                    guardarDatosYRefrescar();
+                    renderizarTabla(buscador.value);
                     seleccionarCalle(id);
 
                     if (correo) {
@@ -627,12 +646,8 @@
             }, 1000);
         }
 
+        // Ya no guardamos en localStorage, el backend es la fuente de la verdad.
         function guardarDatosYRefrescar() {
-            // Revertir para guardarlo en el orden original
-            const dataToSave = [...reportesDB].reverse();
-            localStorage.setItem('cdmx_reportes', JSON.stringify(dataToSave));
-
-            cargarDatos(); // Vuelve a leer (y reversea)
             renderizarTabla(buscador.value);
         }
 
