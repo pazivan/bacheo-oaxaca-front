@@ -257,75 +257,68 @@
                     <!-- Categoría -->
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-3">1. ¿Qué tipo de problema desea reportar?</label>
-                        <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                             <label class="cursor-pointer group">
-                                <input type="radio" name="categoria" value="Bacheo" class="peer sr-only" checked />
+                                <input type="radio" name="categoria" value="Deterioro de superficie vial" class="peer sr-only" checked />
                                 <div class="rounded-xl border-2 border-slate-200 p-3 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col items-center justify-center">
                                     <span class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1">edit_road</span>
-                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Bacheo y Asfalto</p>
+                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Deterioro de superficie (Baches)</p>
                                 </div>
                             </label>
                             <label class="cursor-pointer group">
-                                <input type="radio" name="categoria" value="Alumbrado" class="peer sr-only" />
+                                <input type="radio" name="categoria" value="Falla en alumbrado público" class="peer sr-only" />
                                 <div class="rounded-xl border-2 border-slate-200 p-3 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col items-center justify-center">
                                     <span class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1">lightbulb</span>
-                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Luminaria Apagada</p>
+                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Falla en alumbrado público</p>
                                 </div>
                             </label>
                             <label class="cursor-pointer group">
-                                <input type="radio" name="categoria" value="Fuga de Agua" class="peer sr-only" />
+                                <input type="radio" name="categoria" value="Fuga o pérdida de agua" class="peer sr-only" />
                                 <div class="rounded-xl border-2 border-slate-200 p-3 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col items-center justify-center">
                                     <span class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1">water_drop</span>
-                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Fuga de Agua</p>
+                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Fuga o pérdida de agua</p>
                                 </div>
                             </label>
                             <label class="cursor-pointer group">
-                                <input type="radio" name="categoria" value="Drenaje" class="peer sr-only" />
+                                <input type="radio" name="categoria" value="Obstrucción o falla del sistema de drenaje" class="peer sr-only" />
                                 <div class="rounded-xl border-2 border-slate-200 p-3 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col items-center justify-center">
                                     <span class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1">water_ec</span>
-                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Drenaje o Coladera</p>
+                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Sistema de drenaje</p>
                                 </div>
                             </label>
                             <label class="cursor-pointer group">
-                                <input type="radio" name="categoria" value="Arbol" class="peer sr-only" />
+                                <input type="radio" name="categoria" value="Incidencia en arbolado urbano" class="peer sr-only" />
                                 <div class="rounded-xl border-2 border-slate-200 p-3 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col items-center justify-center">
                                     <span class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1">park</span>
-                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Árbol en Riesgo</p>
+                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Arbolado urbano</p>
                                 </div>
                             </label>
                             <label class="cursor-pointer group">
-                                <input type="radio" name="categoria" value="Semaforo" class="peer sr-only" />
+                                <input type="radio" name="categoria" value="Falla en señalización o control vial" class="peer sr-only" />
                                 <div class="rounded-xl border-2 border-slate-200 p-3 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col items-center justify-center">
                                     <span class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1">traffic</span>
-                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Semáforo o Señal</p>
+                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Señalización o control vial</p>
                                 </div>
                             </label>
                             <label class="cursor-pointer group">
-                                <input type="radio" name="categoria" value="Basura" class="peer sr-only" />
+                                <input type="radio" name="categoria" value="Acumulación o disposición inadecuada de residuos" class="peer sr-only" />
                                 <div class="rounded-xl border-2 border-slate-200 p-3 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col items-center justify-center">
                                     <span class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1">delete</span>
-                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Basura o Escombro</p>
+                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Acumulación de residuos</p>
                                 </div>
                             </label>
                             <label class="cursor-pointer group">
-                                <input type="radio" name="categoria" value="Banquetas" class="peer sr-only" />
+                                <input type="radio" name="categoria" value="Deterioro de infraestructura peatonal" class="peer sr-only" />
                                 <div class="rounded-xl border-2 border-slate-200 p-3 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col items-center justify-center">
                                     <span class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1">directions_walk</span>
-                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Banqueta Dañada</p>
+                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Infraestructura peatonal</p>
                                 </div>
                             </label>
                             <label class="cursor-pointer group">
-                                <input type="radio" name="categoria" value="Socavon" class="peer sr-only" />
+                                <input type="radio" name="categoria" value="Inestabilidad o hundimiento del terreno" class="peer sr-only" />
                                 <div class="rounded-xl border-2 border-slate-200 p-3 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col items-center justify-center">
                                     <span class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1">warning</span>
-                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Socavón o Hundimiento</p>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer group">
-                                <input type="radio" name="categoria" value="Otro" class="peer sr-only" />
-                                <div class="rounded-xl border-2 border-slate-200 p-3 text-center hover:bg-slate-50 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col items-center justify-center">
-                                    <span class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary/70 peer-checked:text-primary mb-1">more_horiz</span>
-                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Otro</p>
+                                    <p class="text-[11px] md:text-xs font-medium text-slate-700 leading-tight">Hundimiento del terreno</p>
                                 </div>
                             </label>
                         </div>
@@ -553,28 +546,21 @@
     
     <!-- LOGIC SCRIPT -->
     <script>
-        // MOCK DATA: Base de datos simulada con LocalStorage
-        const defaultReportes = [
-            {
-                id: "CDMX-2026-001",
-                categoria: "Bacheo",
-                ubicacion: "Av. Insurgentes Sur, Coyoacán",
-                descripcion: "Se cubrió bache de 1m de diámetro reportado por la ciudadanía.",
-                estado: "Concluido",
-                fecha: "28/09/2026",
-                dependencia: "SOBSE",
-                img: "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&q=80&w=400",
-                icon: "edit_road"
+        let reportes = [];
+        let estadisticas = { recibidas: 0, concluidas: 0 };
+
+        async function cargarReportesDB() {
+            try {
+                const res = await fetch('http://localhost:3000/api/reportes');
+                reportes = await res.json();
+                estadisticas.recibidas = reportes.length;
+                estadisticas.concluidas = reportes.filter(r => r.estado === 'Concluido').length;
+                renderHistorial();
+                updateDashboardStats();
+            } catch (err) {
+                console.error("Error al cargar la DB:", err);
             }
-        ];
-
-        let reportes = JSON.parse(localStorage.getItem('cdmx_reportes'));
-        if (!reportes) {
-            reportes = defaultReportes;
-            localStorage.setItem('cdmx_reportes', JSON.stringify(reportes));
         }
-
-        let estadisticas = { recibidas: 8245, concluidas: 4821 };
 
         // INITIALIZE MAP (LEAFLET)
         // Centro CDMX (Zócalo)
@@ -854,7 +840,7 @@
                     <div class="p-5 flex flex-col h-[calc(100%-10rem)]">
                         <div class="flex items-center justify-between mb-2">
                             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 uppercase tracking-wider flex items-center gap-1">
-                                <span class="material-symbols-outlined text-[12px]">${reporte.icon}</span>
+                                <span class="material-symbols-outlined text-[12px]">${reporte.icon || 'label'}</span>
                                 ${reporte.categoria}
                             </span>
                             <span class="text-xs text-slate-400 font-medium">${reporte.fecha}</span>
@@ -898,12 +884,12 @@
             const extraRecibidas = reportes.length;
             const extraConcluidas = reportes.filter(r => r.estado === 'Concluido').length;
             
-            document.getElementById('kpi-recibidas').innerText = (8244 + extraRecibidas).toLocaleString();
-            document.getElementById('hero-concluidas-count').innerText = (4820 + extraConcluidas).toLocaleString();
+            document.getElementById('kpi-recibidas').innerText = extraRecibidas.toLocaleString();
+            document.getElementById('hero-concluidas-count').innerText = extraConcluidas.toLocaleString();
             
             // Si el dashboard KPI existe (en tab 3)
             const kpiConcluidas = document.getElementById('kpi-concluidas');
-            if(kpiConcluidas) kpiConcluidas.innerText = (4820 + extraConcluidas).toLocaleString();
+            if(kpiConcluidas) kpiConcluidas.innerText = extraConcluidas.toLocaleString();
         }
 
         function mostrarTicket(folio) {
@@ -936,79 +922,64 @@
                 const categoriaNode = document.querySelector('input[name="categoria"]:checked');
                 const categoria = categoriaNode ? categoriaNode.value : "Otro";
                 
-                let dependenciaAsignada = "Alcaldía " + alcaldia;
-                if (categoria === "Fuga de Agua" || categoria === "Drenaje") dependenciaAsignada = "SACMEX";
-                if (categoria === "Bacheo" || categoria === "Socavon" || categoria === "Banquetas") dependenciaAsignada = "SOBSE";
-                if (categoria === "Semaforo") dependenciaAsignada = "SEMOVI / SSC";
+                const nuevoFolio = "INC-CDMX-" + Math.floor(Math.random() * 9000 + 1000); // Generar folio temporalmente en frontend, aunque DB crea el suyo real (acá lo pasamos)
 
-                const nuevoFolio = "CDMX-2026-" + Math.floor(Math.random() * 900 + 100);
-                const newReporte = {
-                    id: nuevoFolio, categoria: categoria, ubicacion: ubicacion_completa,
-                    descripcion: descripcion, estado: "Validando (IA / Dron)", 
-                    fecha: new Date().toLocaleDateString('es-MX'), dependencia: dependenciaAsignada,
-                    img: "https://images.unsplash.com/photo-1584483756263-149b144bcbbd?auto=format&fit=crop&q=80&w=400",
-                    icon: "more_horiz", correo: correo
-                };
-
-                reportes.push(newReporte);
-                localStorage.setItem('cdmx_reportes', JSON.stringify(reportes));
-                estadisticas.recibidas++;
-                
-                btn.classList.remove('opacity-90', 'cursor-not-allowed');
-                btnText.innerText = "Enviar Solicitud al Sistema";
-                btnIcon.classList.remove('hidden');
-                spinner.classList.add('hidden');
-                
-                formReporte.reset();
-                const existingImg = document.getElementById('preview-img');
-                if (existingImg) existingImg.remove();
-                document.getElementById('photo-icon').innerText = "add_a_photo";
-                document.getElementById('photo-icon').className = "material-symbols-outlined text-4xl text-slate-400 group-hover:text-primary transition-colors";
-                document.getElementById('photo-text').innerText = "Toca para tomar una foto o subir archivo";
-                
-                // Resetear mapa a posición original
-                map.setView(initialCoords, 11);
-                marker.setLatLng(initialCoords);
-                
-                updateDashboardStats();
-                document.getElementById('input-buscar-historial').value = '';
-                renderHistorial();
-                mostrarTicket(nuevoFolio);
-                
-                // PETICIÓN REAL AL BACKEND PARA ENVIAR CORREO
-                if(correo && correo.trim() !== '') {
-                    fetch('http://localhost:3000/api/enviar-folio', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            correo: correo,
-                            folio: nuevoFolio,
-                            categoria: categoria,
-                            ubicacion: ubicacion_completa,
-                            descripcion: descripcion
-                        })
+                // ENVIAR AL BACKEND (INSERT EN DB POSTGRES)
+                fetch('http://localhost:3000/api/reportes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        correo: correo,
+                        folio: nuevoFolio,
+                        categoria: categoria,
+                        ubicacion: ubicacion_completa,
+                        descripcion: descripcion
                     })
-                    .then(res => res.json())
-                    .then(data => {
-                        if(data.success) {
-                            showToast(`Acuse enviado oficialmente al correo: ${correo}`, 'success');
-                        } else {
-                            showToast(`Hubo un error al enviar el correo: ${data.error}`, 'error');
-                        }
-                    })
-                    .catch(err => {
-                        console.error("Error contactando al servidor:", err);
-                        showToast(`No se pudo conectar al servidor de correos (Asegúrate de que está corriendo).`, 'warning');
-                    });
-                }
-
-                // SIMULACIÓN DE WHATSAPP PARA EL HACKATHON
-                if(telefono && telefono.trim() !== '') {
-                    setTimeout(() => {
-                        showToast(`📱 (Simulación WhatsApp): Tu folio ${nuevoFolio} está en proceso. Mensaje enviado al ${telefono}`, 'success');
-                    }, 2000);
-                }
-                
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.success) {
+                        showToast(`Acuse enviado oficialmente al correo: ${correo || 'N/A'}`, 'success');
+                        // RECARGAR REPORTES DESDE LA BASE DE DATOS
+                        cargarReportesDB();
+                    } else {
+                        showToast(`Hubo un error al enviar: ${data.error}`, 'error');
+                    }
+                    
+                    btn.classList.remove('opacity-90', 'cursor-not-allowed');
+                    btnText.innerText = "Enviar Solicitud al Sistema";
+                    btnIcon.classList.remove('hidden');
+                    spinner.classList.add('hidden');
+                    
+                    formReporte.reset();
+                    const existingImg = document.getElementById('preview-img');
+                    if (existingImg) existingImg.remove();
+                    document.getElementById('photo-icon').innerText = "add_a_photo";
+                    document.getElementById('photo-icon').className = "material-symbols-outlined text-4xl text-slate-400 group-hover:text-primary transition-colors";
+                    document.getElementById('photo-text').innerText = "Toca para tomar una foto o subir archivo";
+                    
+                    // Resetear mapa a posición original
+                    map.setView(initialCoords, 11);
+                    marker.setLatLng(initialCoords);
+                    
+                    document.getElementById('input-buscar-historial').value = '';
+                    mostrarTicket(nuevoFolio);
+                    
+                    // SIMULACIÓN DE WHATSAPP PARA EL HACKATHON
+                    if(telefono && telefono.trim() !== '') {
+                        setTimeout(() => {
+                            showToast(`📱 (Simulación WhatsApp): Tu folio ${nuevoFolio} está en proceso. Mensaje enviado al ${telefono}`, 'success');
+                        }, 2000);
+                    }
+                })
+                .catch(err => {
+                    console.error("Error contactando al servidor:", err);
+                    showToast(`No se pudo conectar al servidor de correos (Asegúrate de que está corriendo).`, 'warning');
+                    btn.classList.remove('opacity-90', 'cursor-not-allowed');
+                    btnText.innerText = "Enviar Solicitud al Sistema";
+                    btnIcon.classList.remove('hidden');
+                    spinner.classList.add('hidden');
+                });
             }, 1500);
         });
 
@@ -1031,8 +1002,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderHistorial();
-            updateDashboardStats();
+            cargarReportesDB();
         });
     </script>
 </body>

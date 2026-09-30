@@ -102,7 +102,10 @@ app.get('/api/reportes', async (req, res) => {
         i.descripcion,
         r.correo_contacto AS correo,
         TO_CHAR(i.fecha_deteccion, 'DD/MM/YYYY') AS fecha,
-        'https://images.unsplash.com/photo-1584483756263-149b144bcbbd?auto=format&fit=crop&q=80&w=400' as img
+        COALESCE(
+          (SELECT archivo_url FROM evidencias ev WHERE ev.id_incidencia = i.id_incidencia ORDER BY ev.id_evidencia ASC LIMIT 1),
+          'https://images.unsplash.com/photo-1584483756263-149b144bcbbd?auto=format&fit=crop&q=80&w=400'
+        ) as img
       FROM incidencias i
       LEFT JOIN categorias c ON i.id_categoria = c.id_categoria
       LEFT JOIN estados_incidencia e ON i.id_estado = e.id_estado

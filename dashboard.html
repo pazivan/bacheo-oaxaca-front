@@ -164,16 +164,15 @@
                         onchange="renderizarTabla(document.getElementById('buscador-calles').value)"
                         class="block w-48 pl-3 pr-8 py-2 border border-gray-200 bg-white rounded-xl focus:ring-primary focus:border-primary sm:text-sm text-gray-700 font-medium ml-2 shadow-sm">
                         <option value="">Todas las Categorías</option>
-                        <option value="superficie">Deterioro de superficie</option>
-                        <option value="alumbrado">Falla en alumbrado</option>
-                        <option value="fuga">Fuga o pérdida de agua</option>
-                        <option value="drenaje">Sistema de drenaje</option>
-                        <option value="arbolado">Arbolado urbano</option>
-                        <option value="vial">Señalización o control vial</option>
-                        <option value="residuo">Acumulación de residuos</option>
-                        <option value="peatonal">Infraestructura peatonal</option>
-                        <option value="hundimiento">Hundimiento del terreno</option>
-                        <option value="clasificada">Otros (No clasificada)</option>
+                        <option value="Deterioro de superficie vial">Deterioro de superficie vial (Baches)</option>
+                        <option value="Falla en alumbrado público">Falla en alumbrado público</option>
+                        <option value="Fuga o pérdida de agua">Fuga o pérdida de agua</option>
+                        <option value="Obstrucción o falla del sistema de drenaje">Sistema de drenaje</option>
+                        <option value="Incidencia en arbolado urbano">Arbolado urbano</option>
+                        <option value="Falla en señalización o control vial">Señalización o control vial (Semáforos)</option>
+                        <option value="Acumulación o disposición inadecuada de residuos">Acumulación de residuos</option>
+                        <option value="Deterioro de infraestructura peatonal">Infraestructura peatonal</option>
+                        <option value="Inestabilidad o hundimiento del terreno">Hundimiento del terreno</option>
                     </select>
                 </div>
                 <button
@@ -356,12 +355,7 @@
             const catFiltro = document.getElementById('filtro-categoria') ? document.getElementById('filtro-categoria').value : "";
             let baseData = reportesDB;
             if (catFiltro !== "") {
-                const searchCat = catFiltro.toLowerCase().replace('á','a').replace('é','e');
-                baseData = reportesDB.filter(r => {
-                    if(!r.categoria) return false;
-                    const rC = r.categoria.toLowerCase().replace('á','a').replace('é','e');
-                    return rC.includes(searchCat);
-                });
+                baseData = reportesDB.filter(r => r.categoria && r.categoria === catFiltro);
             }
 
             document.getElementById('badge-todos').innerText = baseData.length;
@@ -393,12 +387,7 @@
             // Filtro de Categoría
             const catFiltro = document.getElementById('filtro-categoria').value;
             if (catFiltro !== "") {
-                const searchCat = catFiltro.toLowerCase().replace('á','a').replace('é','e');
-                filtrados = filtrados.filter(r => {
-                    if(!r.categoria) return false;
-                    const rC = r.categoria.toLowerCase().replace('á','a').replace('é','e');
-                    return rC.includes(searchCat);
-                });
+                filtrados = filtrados.filter(r => r.categoria && r.categoria === catFiltro);
             }
 
             // Filtro por buscador
